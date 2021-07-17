@@ -1,3 +1,5 @@
+include ../blocks/range-slider/range-slider
+
 doctype html
 html(lang="en")
    head
@@ -6,6 +8,12 @@ html(lang="en")
       meta(name="viewport", content="width=device-width, initial-scale=1.0")
       title Range Slider Demo
    body 
-      h1 TEST
+      .demo-page
+         h1.demo-page__title Range slider demo page
+         +range-slider({showConfig: true})
+      //-подключать миксин слайдера с опциями по нескольку раз
+      //-тыц
+      //-тц
+      //-тыц
 
       script(src="./index.ts") 

@@ -1,1 +1,2 @@
-console.log('init')
+import "./demo-page.js"
+

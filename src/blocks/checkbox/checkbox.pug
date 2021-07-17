@@ -1,0 +1,5 @@
+mixin checkbox(options)
+   - const { name, isTurn } = options
+      .checkbox
+         label(for=`${name}`).checkbox__content=name
+         input(type='checkbox' id=`${name}` checked=isTurn).checkbox__box

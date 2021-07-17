@@ -1,0 +1,12 @@
+.slider-config {
+   &__inputs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      margin-top: 5px;
+      
+   }
+   &__checkboxes {
+      @extend .slider-config__inputs;
+   }
+}
