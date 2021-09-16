@@ -2,8 +2,8 @@ include ../slider-config/slider-config
 
 mixin range-slider(options)
    - const { showConfig=false, min=0, max=100, step=1, from=20, to=80, isVertical=false, isRange=true, showScale=false, showBar=true, showTip=true } = options
-      .range-slider
-         .range-slider__slider.js-range-slider
+      .slider-container
+         .slider-container__slider.ez-range-slider
          if (showConfig)
             +slider-config({
                showConfig: showConfig,
