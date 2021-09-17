@@ -1,4 +1,4 @@
-import "./demo-page.js";
+import "./demo-page.ts";
 import View from "../app/View/MainView/MainView";
 
 const rangeSlider = document.querySelectorAll(".ez-range-slider")
