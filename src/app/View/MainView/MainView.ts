@@ -2,13 +2,18 @@ import Observer from "../../Observer/Observer";
 import createElement from "../utils/createElement";
 import TrackView from "../TrackView/TrackView";
 import ScaleView from "../ScaleView/ScaleView";
+import { TrackOptions } from "../../interfaces/TrackOptions";
 
 class View extends Observer {
    track: TrackView;
 
+   trackOptions: TrackOptions
+
    scale: ScaleView;
 
-   slider: HTMLElement
+   slider: HTMLElement;
+
+
 
    constructor(public container: HTMLElement) {
       super();
@@ -22,12 +27,12 @@ class View extends Observer {
          {className: "range-slider"}
       )
       
-      this.track = new TrackView;
+      this.track = new TrackView(this.trackOptions);
       this.scale = new ScaleView;
       
-      this.container.append(this.slider);
-      this.slider.append(this.track.getTrack());
-      this.slider.append(this.scale.getScale());
+      this.container.appendChild(this.slider);
+      this.slider.appendChild(this.track.getTrack());
+      this.slider.appendChild(this.scale.getScale());
    }
 }
 

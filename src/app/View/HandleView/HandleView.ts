@@ -1,39 +1,39 @@
 import Observer from "../../Observer/Observer";
 import createElement from "../utils/createElement";
+import {HandleOptions} from "../../interfaces/HandleOptions";
 
 class HandleView extends Observer {
-   handle: HTMLElement;
+  handle: HTMLElement;
 
-   tip: HTMLElement;
+  tip: HTMLElement;
 
-   
-   constructor(public node: HTMLElement) {
-      super();
+  showTip: boolean = true;
 
-      this.init();
-   }
+  constructor(public node: HTMLElement, public options: HandleOptions) {
+    super();
 
-   private init() {
-      this.createHandleElements();
-   }
+    this.init();
+  }
+  public getHandle() {
+    return this.handle;
+  }
 
+  private init() {
+    this.createHandleElements();
+  }
 
-   private createHandleElements() {
-      this.tip = createElement (
-         "div",
-         {className: "range-slider__tip"}
-      )
+  private createHandleElements() {
+    const tipOn = this.options.showTip ? "" : "_hide";
+    this.tip = createElement("div", { className: `range-slider__tip${tipOn}` });
 
-      this.handle = createElement(
-         "div",
-         {className: "range-slider__handle"},
-         this.tip
-      )
+    this.handle = createElement(
+      "div",
+      { className: "range-slider__handle" },
+      this.tip
+    );
 
-      this.node.append(this.handle);
-   }
-  
-
+    this.node.appendChild(this.handle);
+  }
 }
 
-export default HandleView
+export default HandleView;
