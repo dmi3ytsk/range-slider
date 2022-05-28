@@ -39,6 +39,14 @@ class ScaleView extends Observer {
     return this.scale;
   }
 
+  public updateSliderSize(size: number) {
+    this.sliderSize = size;
+  }
+
+  public updateOptions(options: GlobalOptions) {
+    this.options = options;
+  }
+
   public handleScaleElementClick = (event: MouseEvent) => {
     const { target } = event;
 
@@ -73,6 +81,7 @@ class ScaleView extends Observer {
   private createScale() {
     this.scale = createElement("ul", { className: "range-slider__scale" });
   }
+  
   private createAllScaleValues() {
    const { max, min } = this.options;
    const { quantity, scaleStep } = this.calculateNumbersQuantity();
