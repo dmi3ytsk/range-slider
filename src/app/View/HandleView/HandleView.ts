@@ -16,6 +16,7 @@ class HandleView extends Observer {
 
     this.init();
   };
+  
   public getHandle() {
     return this.handle;
   };
@@ -56,8 +57,8 @@ class HandleView extends Observer {
     const position = isVertical ? positionVertical : positionHorizontal;
 
     if (isVertical) {
-      this.tip.style.top = `${position}px`; ///....???
-    }
+      this.tip.style.top = `${position - Math.ceil(this.tip.offsetHeight / 2)}px`;
+   }
     else {
       this.tip.style.left = `${position}px`;
     }
