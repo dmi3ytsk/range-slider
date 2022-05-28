@@ -81,7 +81,7 @@ class ScaleView extends Observer {
   private createScale() {
     this.scale = createElement("ul", { className: "range-slider__scale" });
   }
-  
+
   private createAllScaleValues() {
    const { max, min } = this.options;
    const { quantity, scaleStep } = this.calculateNumbersQuantity();
