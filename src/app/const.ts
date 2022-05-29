@@ -1,9 +1,10 @@
-const defaultAttributes: Object = {
+const defaultAttributes = {
+  width: 100,
   min: 0,
   max: 100,
   step: 1,
-  from: 10,
-  to: 80,
+  fromCurrentValue: 10,
+  toCurrentValue: 80,
   isRange: true,
   isVertical: false,
   showTip: true,
