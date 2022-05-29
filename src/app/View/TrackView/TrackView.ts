@@ -23,7 +23,7 @@ class TrackView extends Observer {
     this.initTrackElements();
   };
 
-  private initTrackElements() {
+  public initTrackElements() {
     this.track.innerHTML = "";
     const {
       isVertical,
@@ -84,7 +84,7 @@ class TrackView extends Observer {
     this.options = options;
   };
 
-  private updateBar(state: boolean) {
+  public updateBar(state: boolean) {
     if (state) {
       this.track.appendChild(this.bar);
       this.bar.style.display = "block";

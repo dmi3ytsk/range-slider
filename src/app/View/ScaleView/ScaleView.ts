@@ -17,7 +17,7 @@ class ScaleView extends Observer {
     this.init();
   }
 
-  private init() {
+  public init() {
     this.createScale();
 
     this.createAllScaleValues();
