@@ -33,6 +33,60 @@ class Model extends Observer {
     this.broadcast("changeRatios", this.ratios);
   }
 
+  public setBooleanOptions(newOptions: UpdateBooleanOptions) {
+    const newData: any = {};//newData: Partial<GlobalOptions>
+    const { optionName, optionState } = newOptions;
+
+    switch (optionName) {
+      case "isRange":
+      case "isVertical":
+      case "showTip":
+      case "showBar":
+      case "showScale":  
+        newData[optionName] = optionState;
+        break;
+      default:
+        throw new Error("Invalid value");
+    }
+
+    // if (optionName === "showBar") {
+    //   this.changeIntervalDependences();
+    // }
+
+    this.changeData(newData);
+
+    this.subscribe("UpdateBooleanOptions", newData); //немогу понять почему ошибка, чтото не так с subscribe
+  }
+
+  public setNumberOptions(newOptions: UpdateNumberOptions) {
+    const newData: any = {};//newData: Partial<GlobalOptions>
+    const { optionName, optionState } = newOptions;
+
+    switch (optionName) {
+      case "min":
+      case "max":
+      case "step":
+        newData[optionName] = optionState;
+        break;
+      case "fromCurrentValue":
+        this.setCurrentValues({
+          fromCurrentValue: this.returnCorrectValue(optionState),
+        });
+        break;
+      case "toCurrentValue":
+        this.setCurrentValues({
+          toCurrentValue: this.returnCorrectValue(optionState),
+        });
+        break;
+      default:
+        throw new Error("Invalid value");
+    }
+
+    this.changeData(newData);
+    // this.causeNecessaryDependence(optionName, optionState);
+    this.subscribe("updateNumberOptions", newData);//немогу понять почему ошибка, чтото не так с subscribe
+  }
+
   public getData = (): GlobalOptions => {
     return this.data;
   };
@@ -40,6 +94,7 @@ class Model extends Observer {
   public getRatios(): Ratios {
     return this.ratios;
   }
+
   public changeFromCurrentValue = (FromRatio: number) => {
     const { max, min } = this.data;
     const possibleCurrentValue = FromRatio * (max - min) + min;
