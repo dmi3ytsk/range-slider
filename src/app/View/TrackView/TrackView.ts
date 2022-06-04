@@ -18,11 +18,6 @@ class TrackView extends Observer {
     this.init();
   };
 
-  private init() {
-    this.createTrackElements();
-    this.initTrackElements();
-  };
-
   public initTrackElements() {
     this.track.innerHTML = "";
     const {
@@ -34,7 +29,6 @@ class TrackView extends Observer {
       toCurrentValue,
       ratios: { fromRatio, toRatio },
     } = this.options;
-
     if (isRange) {
       this.handles = [
         new HandleView(this.track, {
@@ -93,12 +87,6 @@ class TrackView extends Observer {
     }
   };
 
-  private createTrackElements() {
-    this.track = createElement("div", { className: "range-slider__track" });
-
-    this.bar = createElement("div", { className: "range-slider__bar" });
-  };
-
   public setElementsPosition(options: TrackOptions) {
     const {
       isVertical,
@@ -153,6 +141,17 @@ class TrackView extends Observer {
     return this.track;
   };
 
+  private init() {
+    this.createTrackElements();
+    this.initTrackElements();
+  };
+
+  private createTrackElements() {
+    this.track = createElement("div", { className: "range-slider__track" });
+
+    this.bar = createElement("div", { className: "range-slider__bar" });
+  };
+
   private fromHandleChangeListener = (ratio: number) => {
     this.broadcast("handleMoved", { handleNumber: 1, ratio });
   };
@@ -160,7 +159,6 @@ class TrackView extends Observer {
   private toHandleChangeListener = (ratio: number) => {
     this.broadcast("handleMoved", { handleNumber: 2, ratio });
   };
-
-}
+};
 
 export default TrackView;
