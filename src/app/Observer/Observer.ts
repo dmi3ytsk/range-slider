@@ -7,7 +7,6 @@ class Observer {
   }
 
   public broadcast(event: string, data: any) {
-    // this.listeners[event].data.forEach((listener) => listener(data));
     if (this.listeners[event]) {
       this.listeners[event].forEach((callback: (data: {}) => void) =>
         callback(data),
