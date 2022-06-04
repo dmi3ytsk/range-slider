@@ -38,9 +38,8 @@ class View extends Observer {
     this.slider = createElement("div", { className: "range-slider" });
 
     if (this.options.isVertical) {
-      this.slider.classList.add("slider_vertical");
+      this.slider.classList.add("range-slider_vertical");
     }
-
     this.track = new TrackView(this.trackOptions);
     this.scale = new ScaleView(this.options);
 
