@@ -1,19 +1,24 @@
-include ../blocks/range-slider/range-slider
+include ../blocks/slider-config/slider-config
 
 doctype html
 html(lang="en")
    head
       meta(charset="UTF-8")
-      meta(http-equiv="X-UA-Compatible", content="IE=edge")
-      meta(name="viewport", content="width=device-width, initial-scale=1.0")
+      meta(http-equiv="X-UA-Compatible" content="IE=edge")
+      meta(name="viewport" content="width=device-width, initial-scale=1.0")
       title EZ Range Slider Demo
    body 
       .demo-page
          h1.demo-page__title Range slider demo page
-         +range-slider({showConfig: true})
-      //-подключать миксин слайдера с опциями по нескольку раз
-      //-тыц
-      //-тц
-      //-тыц
+      .slider-container.ez-range-slider     
+         .slider-container__slider
+         +slider-config
+
+      .slider-container.ez-range-slider(
+         data-show-bar = "true",
+         data-is-range = "false",
+         data-show-tip = "true"
+      )     
+         .slider-container__slider
 
       script(src="./index.ts") 
