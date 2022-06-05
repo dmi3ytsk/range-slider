@@ -1,7 +1,11 @@
 import "./demo-page.ts";
-import View from "../app/View/MainView/MainView";
+import DemoPage from "./DemoPage";
 
-const rangeSlider = document.querySelectorAll(".ez-range-slider")
-rangeSlider.forEach(function (each) {
-   new View(each)
-})
+const sliders = document.querySelectorAll(".ez-range-slider");
+
+sliders.forEach((slider: any) => {
+  const sliderContainer = slider.querySelector(".slider-container__slider");
+  if (sliderContainer && sliderContainer instanceof HTMLElement) {
+    new DemoPage(slider, sliderContainer);
+  }
+});
