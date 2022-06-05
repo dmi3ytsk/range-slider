@@ -1,18 +1,17 @@
 include ../input/input
 include ../checkbox/checkbox
 
-mixin slider-config(options)
-   - const { min, max, step, from, to, isVertical, isRange, showScale, showBar, showTip } = options
-      .slider-config.ez-range-slider-config
+mixin slider-config
+      form.slider-config.ez-range-slider-config
          .slider-config__inputs
-            +input({name: "min", value: min})
-            +input({name: "max", value: max})
-            +input({name: "step", value: step})
-            +input({name: "from", value: from})
-            +input({name: "to", value: to})
+            +input({name: "min", label: "min value"})
+            +input({name: "max", label: "max value"})
+            +input({name: "step", label: "step"})
+            +input({name: "fromCurrentValue", label: "from"})
+            +input({name: "toCurrentValue", label: "to"})
          .slider-config__checkboxes   
-            +checkbox({name: "isVertical", isTurn: isVertical})
-            +checkbox({name: "isRange", isTurn: isRange})   
-            +checkbox({name: "showScale", isTurn: showScale})
-            +checkbox({name: "showBar", isTurn: showBar})   
-            +checkbox({name: "showTip", isTurn: showTip})   
+            +checkbox({name: "isVertical", label: "Vertical"})
+            +checkbox({name: "isRange", label: "Range from-to"})   
+            +checkbox({name: "showScale", label: "Show scale"})
+            +checkbox({name: "showBar", label: "Show bar"})   
+            +checkbox({name: "showTip", label: "Show tips"})   
