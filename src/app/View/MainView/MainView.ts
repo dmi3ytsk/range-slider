@@ -163,11 +163,10 @@ class View extends Observer {
 
  private notifyHandleDrag = (valueSettings: ValueOptions) => {
    const { handleNumber, ratio } = valueSettings;
-
    if (handleNumber === 1) {
-     this.broadcast("handleFirstRunnerDrag", ratio);
+     this.broadcast("handleFromHandleDrag", ratio);
    } else {
-     this.broadcast("handleSecondRunnerDrag", ratio);
+     this.broadcast("handleToHandleDrag", ratio);
    }
  };
 }
