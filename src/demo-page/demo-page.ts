@@ -1,2 +1,2 @@
-import "../blocks/range-slider/range-slider";
+import "../blocks/slider-config/slider-config";
 import "./demo-page.scss"
