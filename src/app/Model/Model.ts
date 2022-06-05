@@ -34,7 +34,7 @@ class Model extends Observer {
   }
 
   public setBooleanOptions(newOptions: UpdateBooleanOptions) {
-    const newData: any = {};//newData: Partial<GlobalOptions>
+    const newData: Partial<GlobalOptions> = {};
     const { optionName, optionState } = newOptions;
 
     switch (optionName) {
@@ -42,24 +42,24 @@ class Model extends Observer {
       case "isVertical":
       case "showTip":
       case "showBar":
-      case "showScale":  
+      case "showScale":
         newData[optionName] = optionState;
         break;
       default:
         throw new Error("Invalid value");
     }
 
-    // if (optionName === "showBar") {
-    //   this.changeIntervalDependences();
-    // }
+    if (optionName === "showBar") {
+      this.changeIntervalDependences();
+    }
 
     this.changeData(newData);
 
-    this.subscribe("UpdateBooleanOptions", newData); //немогу понять почему ошибка, чтото не так с subscribe
+    this.subscribe("UpdateBooleanOptions", newData);
   }
 
   public setNumberOptions(newOptions: UpdateNumberOptions) {
-    const newData: any = {};//newData: Partial<GlobalOptions>
+    const newData: Partial<GlobalOptions> = {};
     const { optionName, optionState } = newOptions;
 
     switch (optionName) {
@@ -83,8 +83,8 @@ class Model extends Observer {
     }
 
     this.changeData(newData);
-    // this.causeNecessaryDependence(optionName, optionState);
-    this.subscribe("updateNumberOptions", newData);//немогу понять почему ошибка, чтото не так с subscribe
+    this.causeNecessaryDependence(optionName, optionState);
+    this.subscribe("updateNumberOptions", newData); 
   }
 
   public getData = (): GlobalOptions => {
@@ -95,13 +95,25 @@ class Model extends Observer {
     return this.ratios;
   }
 
+  public changeStepDependences(step: number) {
+    this.checkRemainder(step);
+
+    const { fromCurrentValue, toCurrentValue } = this.data;
+
+    if (fromCurrentValue === toCurrentValue) {
+      this.checkFirstBoundaries(step);
+      this.checkSecondBoundaries(step);
+    }
+  }
+
   public changeFromCurrentValue = (FromRatio: number) => {
+    
     const { max, min } = this.data;
     const possibleCurrentValue = FromRatio * (max - min) + min;
 
     const newValue = this.returnCorrectValue(possibleCurrentValue);
 
-    this.setCurrentValues({ FromCurrentValue: newValue });
+    this.setCurrentValues({ fromCurrentValue: newValue });
   };
 
   public changeToCurrentValue = (ToRatio: number) => {
@@ -109,12 +121,12 @@ class Model extends Observer {
     const possibleCurrentValue = ToRatio * (max - min) + min;
     const newValue = this.returnCorrectValue(possibleCurrentValue);
 
-    this.setCurrentValues({ ToCurrentValue: newValue });
+    this.setCurrentValues({ toCurrentValue: newValue });
   };
   public setCurrentValues = (newData: Partial<GlobalOptions>) => {
-    const { hasInterval } = this.data;
+    const { isRange } = this.data;
 
-    if (hasInterval) {
+    if (isRange) {
       newData = this.returnSelectedValue(newData);
     }
 
@@ -168,6 +180,138 @@ class Model extends Observer {
 
     this.calculateNewRatios();
     this.broadcast("changeData", this.data);
+  }
+  private changeIntervalDependences() {
+    const { toCurrentValue, fromCurrentValue, step, min } = this.data;
+
+    if (fromCurrentValue >= toCurrentValue) {
+      let value = toCurrentValue - step;
+      if (value < min) {
+        value = min;
+      }
+
+      const newFirstValue = {
+        fromCurrentValue: value,
+      };
+
+      this.changeData(newFirstValue);
+    }
+
+    if (toCurrentValue === min) {
+      const newSecondValue = {
+        toCurrentValue: toCurrentValue + step,
+      };
+
+      this.changeData(newSecondValue);
+    }
+  }
+
+  private causeNecessaryDependence(
+    optionName: NumberOptions,
+    optionState: number
+  ) {
+    if (optionName === "step") {
+      this.changeStepDependences(optionState);
+    }
+    if (optionName === "max") {
+      this.changeMaxDependences(optionState);
+    }
+    if (optionName === "min") {
+      this.changeMinDependences(optionState);
+    }
+  }
+
+  private changeMaxDependences(max: number) {
+    const { fromCurrentValue, step, toCurrentValue } = this.data;
+    if (max <= fromCurrentValue) {
+      const newValue = {
+        fromCurrentValue: max - step,
+      };
+
+      this.changeData(newValue);
+    }
+
+    if (max <= toCurrentValue) {
+      const newValue = {
+        toCurrentValue: max,
+      };
+
+      this.changeData(newValue);
+    }
+
+    this.setNumberOptions({ optionState: step, optionName: "step" });
+  }
+
+  private changeMinDependences(min: number) {
+    const { fromCurrentValue, step, toCurrentValue } = this.data;
+    if (min >= fromCurrentValue) {
+      const newValue = {
+        fromCurrentValue: min,
+      };
+
+      this.changeData(newValue);
+    }
+
+    if (min >= toCurrentValue) {
+      const newValue = {
+        toCurrentValue: min + step,
+      };
+
+      this.changeData(newValue);
+    }
+
+    this.changeData({ min });
+    this.setNumberOptions({ optionState: step, optionName: "step" });
+  }
+
+  private checkRemainder(step: number) {
+    const { fromCurrentValue, toCurrentValue, min } = this.data;
+    const currentValues = [fromCurrentValue, toCurrentValue];
+
+    currentValues.forEach((current) => {
+      if ((current - min) % step) {
+        const newCurrentValue = this.returnCorrectValue(current);
+
+        const newModelValue =
+          current === fromCurrentValue
+            ? { fromCurrentValue: newCurrentValue }
+            : { toCurrentValue: newCurrentValue };
+
+        this.changeData(newModelValue);
+      }
+    });
+  }
+
+  private checkFirstBoundaries(step: number) {
+    const { min, max, fromCurrentValue } = this.data;
+
+    if (fromCurrentValue <= min + step) {
+      const newSecondValue = {
+        toCurrentValue: fromCurrentValue + step,
+      };
+
+      if (newSecondValue.toCurrentValue >= max) {
+        newSecondValue.toCurrentValue = max;
+      }
+
+      this.changeData(newSecondValue);
+    }
+  }
+
+  private checkSecondBoundaries(step: number) {
+    const { min, max, fromCurrentValue, toCurrentValue } = this.data;
+
+    if (toCurrentValue >= max - step) {
+      const newFirstValue = {
+        fromCurrentValue: fromCurrentValue - step,
+      };
+
+      if (newFirstValue.fromCurrentValue <= min) {
+        newFirstValue.fromCurrentValue = min;
+      }
+
+      this.changeData(newFirstValue);
+    }
   }
 }
 
