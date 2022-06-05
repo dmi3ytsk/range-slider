@@ -39,9 +39,10 @@ class HandleView extends Observer {
   }
 
   private init() {
-    this.setDragListeners;
     this.createHandleElements();
     this.setPosition();
+    this.setDragListeners();
+
   }
 
   private createHandleElements() {
@@ -83,11 +84,6 @@ class HandleView extends Observer {
     this.tip.innerText = currentValue.toFixed().toString();
   }
 
-  private handleWindowMouseUp = () => {
-    window.removeEventListener("mousemove", this.handleWindowMouseMove);
-    window.removeEventListener("mouseup", this.handleWindowMouseUp);
-  };
-
   private handleWindowMouseMove = (event: MouseEvent) => {
     const { isVertical } = this.options;
     const { clientX, clientY, offsetLeft, offsetTop, offsetHeight } =
@@ -100,8 +96,13 @@ class HandleView extends Observer {
     const value = isVertical
       ? (this.sliderSize - position) / this.sliderSize
       : position / this.sliderSize;
-
     this.broadcast("dragHandle", value);
+
+  };
+
+  private handleWindowMouseUp = () => {
+    window.removeEventListener("mousemove", this.handleWindowMouseMove);
+    window.removeEventListener("mouseup", this.handleWindowMouseUp);
   };
 
   private setDragListeners() {
@@ -114,7 +115,6 @@ class HandleView extends Observer {
     if (target && target instanceof HTMLElement) {
       const { clientY, clientX } = event;
       const { offsetLeft, offsetTop, offsetHeight } = target;
-
       this.positionOptions = {
         clientY,
         clientX,

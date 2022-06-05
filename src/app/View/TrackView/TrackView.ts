@@ -62,9 +62,9 @@ class TrackView extends Observer {
       handle.updateSliderSize(this.sliderSize);
 
       if (index === 0) {
-        handle.subscribe("handleMoved", this.fromHandleChangeListener);
+        handle.subscribe("dragHandle", this.fromHandleChangeListener);
       } else {
-        handle.subscribe("handleMoved", this.toHandleChangeListener);
+        handle.subscribe("dragHandle", this.toHandleChangeListener);
       }
     });
     this.updateBar(showBar);
@@ -117,7 +117,6 @@ class TrackView extends Observer {
       handle.updateSliderSize(this.sliderSize);
       handle.updateOptions(newOptions);
     });
-
     if (isVertical) {
       this.bar.style.transform = `scaleY(${fromRatio})`;
     } else {
@@ -153,11 +152,11 @@ class TrackView extends Observer {
   };
 
   private fromHandleChangeListener = (ratio: number) => {
-    this.broadcast("handleMoved", { handleNumber: 1, ratio });
+    this.broadcast("dragHandle", { handleNumber: 1, ratio });
   };
 
   private toHandleChangeListener = (ratio: number) => {
-    this.broadcast("handleMoved", { handleNumber: 2, ratio });
+    this.broadcast("dragHandle", { handleNumber: 2, ratio });
   };
 };
 
