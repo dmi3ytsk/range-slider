@@ -80,7 +80,6 @@ class HandleView extends Observer {
       this.thumb.style.left = `${position}px`;
       this.tip.style.left = `${position}px`;
     }
-
     this.tip.innerText = currentValue.toFixed().toString();
   }
 
