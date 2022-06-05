@@ -1,13 +1,13 @@
 import Model from "../Model/Model";
 import View from "../View/MainView/MainView";
 import { GlobalOptions } from "../interfaces/GlobalOptions";
-import { UpdateBooleanOptions, UpdateNumberOptions } from "../interfaces/AttributesOptions";
+import {
+  UpdateBooleanOptions,
+  UpdateNumberOptions,
+} from "../interfaces/AttributesOptions";
 
 class Controller {
-  constructor(
-    readonly model: Model,
-    readonly view: View,
-  ) {
+  constructor(readonly model: Model, readonly view: View) {
     this.subscribeToViewEvents();
     this.subscribeToModelEvents();
   }
@@ -30,7 +30,7 @@ class Controller {
 
   private subscribeToModelEvents() {
     const updateScaleEvents = ["updateBooleanOptions", "updateNumberOptions"];
-    updateScaleEvents.forEach(event => {
+    updateScaleEvents.forEach((event) => {
       this.model.subscribe(event, this.view.updateScale);
       this.model.subscribe(event, this.view.reInitSlider);
     });
@@ -42,7 +42,10 @@ class Controller {
   }
 
   private subscribeToViewEvents() {
-    this.view.subscribe("handleFromHandleDrag", this.model.changeFromCurrentValue);
+    this.view.subscribe(
+      "handleFromHandleDrag",
+      this.model.changeFromCurrentValue
+    );
     this.view.subscribe("handleToHandleDrag", this.model.changeToCurrentValue);
   }
 }
