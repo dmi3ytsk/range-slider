@@ -1,6 +1,4 @@
 import { GlobalOptions } from "../../app/interfaces/GlobalOptions";
-// import jquery from "jquery";
-// (<any>window).$ = (<any>window).jQuery = jquery;
 
 class SliderConfig {
   options: GlobalOptions;
@@ -14,7 +12,6 @@ class SliderConfig {
   public init() {
     const index = 0;
     this.options = this.$slider.slider(this.root, "getOptions")[index];
-
     this.$slider.slider(
       this.sliderContainer,
       "checkUpdates",
@@ -148,7 +145,9 @@ class SliderConfig {
     const checkboxes = this.root.querySelectorAll(".checkbox__box");
 
     checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener("change", this.handleCheckboxChange);
+      if (checkbox instanceof HTMLInputElement) {
+        checkbox.addEventListener("change", this.handleCheckboxChange);
+      }
     });
   }
 
