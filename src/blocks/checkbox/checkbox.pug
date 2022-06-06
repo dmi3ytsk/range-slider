@@ -1,5 +1,5 @@
 mixin checkbox(options)
    - const { name="", label="" } = options
       .checkbox
-         label(for=`${name}`).checkbox__content=label
+         label.checkbox__content=label
          input(type="checkbox" id=`${name}` name=name).checkbox__box
