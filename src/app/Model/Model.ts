@@ -54,8 +54,7 @@ class Model extends Observer {
     }
 
     this.changeData(newData);
-
-    this.subscribe("UpdateBooleanOptions", newData);
+    this.broadcast("updateBooleanOptions", newData);
   }
 
   public setNumberOptions(newOptions: UpdateNumberOptions) {
@@ -84,7 +83,7 @@ class Model extends Observer {
 
     this.changeData(newData);
     this.causeNecessaryDependence(optionName, optionState);
-    this.subscribe("updateNumberOptions", newData); 
+    this.broadcast("updateNumericOptions", newData); 
   }
 
   public getData = (): GlobalOptions => {

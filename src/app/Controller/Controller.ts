@@ -14,6 +14,7 @@ class Controller {
 
   public updateBooleanOptions(newOptions: UpdateBooleanOptions) {
     this.model.setBooleanOptions(newOptions);
+    console.log(newOptions)
   }
 
   public updateNumericOptions(newOptions: UpdateNumberOptions) {
@@ -29,7 +30,7 @@ class Controller {
   }
 
   private subscribeToModelEvents() {
-    const updateScaleEvents = ["updateBooleanOptions", "updateNumberOptions"];
+    const updateScaleEvents = ["updateBooleanOptions", "updateNumericOptions"];
     updateScaleEvents.forEach((event) => {
       this.model.subscribe(event, this.view.updateScale);
       this.model.subscribe(event, this.view.reInitSlider);

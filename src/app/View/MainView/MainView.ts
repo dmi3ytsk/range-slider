@@ -48,8 +48,9 @@ class View extends Observer {
     this.slider.appendChild(this.scale.getScale());
 
     this.updateSliderSize();
-
-    this.scale.init();
+    if(this.options.showScale){
+      this.scale.init();
+    }
 
     this.bindResizeListener();
     this.setPosition();
@@ -116,9 +117,9 @@ class View extends Observer {
 
   public updateOrientation = () => {
    if (this.options.isVertical) {
-     this.slider.classList.add("slider_vertical");
+     this.slider.classList.add("range-slider_vertical");
    } else {
-     this.slider.classList.remove("slider_vertical");
+     this.slider.classList.remove("range-slider_vertical");
    }
 
    this.updateSliderSize();

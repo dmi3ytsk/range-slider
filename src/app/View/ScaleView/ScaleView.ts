@@ -14,17 +14,14 @@ class ScaleView extends Observer {
 
     this.scaleElements = [];
 
-    this.init();
+    this.createScale();
   }
 
   public init() {
-    this.createScale();
-
     this.createAllScaleValues();
-
     this.setClickListener();
   }
-  
+
   public reInitScale() {
     this.scaleElements.forEach((element) => {
       element.remove();
@@ -57,21 +54,20 @@ class ScaleView extends Observer {
   };
 
   private broadcastCorrectHandle(newValue: number) {
-    const { toCurrentValue,
-      fromCurrentValue,
-      isRange,
-      min,
-      max } = this.options;
-    const proximityCondition = (Math.abs(toCurrentValue - newValue) > Math.abs(fromCurrentValue - newValue));
+    const { toCurrentValue, fromCurrentValue, isRange, min, max } =
+      this.options;
+    const proximityCondition =
+      Math.abs(toCurrentValue - newValue) >
+      Math.abs(fromCurrentValue - newValue);
     const ratio = (newValue - min) / (max - min);
 
     if (!isRange || proximityCondition) {
-      this.broadcast('scaleClick', {
+      this.broadcast("scaleClick", {
         handleNumber: 1,
         ratio,
       });
     } else {
-      this.broadcast('scaleClick', {
+      this.broadcast("scaleClick", {
         handleNumber: 2,
         ratio,
       });
@@ -79,119 +75,124 @@ class ScaleView extends Observer {
   }
 
   private createScale() {
-    this.scale = createElement("ul", { className: "range-slider__scale" });
+    this.scale = createElement("ul", {
+      className: `range-slider__scale`,
+    });
   }
 
   private createAllScaleValues() {
-   const { max, min } = this.options;
-   const { quantity, scaleStep } = this.calculateNumbersQuantity();
-   let value: number = 0;
+    const { max, min } = this.options;
+    const { quantity, scaleStep } = this.calculateNumbersQuantity();
+    let value: number = 0;
 
-   for (let i = 0; i <= quantity; i += 1) {
-     let currentValue = min + value;
-     let position = value;
-     const li: HTMLElement = createElement("li", {
-       className: "range-slider__scale-number",
-     });
+    for (let i = 0; i <= quantity; i += 1) {
+      let currentValue = min + value;
+      let position = value;
+      const li: HTMLElement = createElement("li", {
+        className: "range-slider__scale-number",
+      });
 
-     value += scaleStep;
+      value += scaleStep;
 
-     if (currentValue > max) {
-       currentValue = max;
-       position = max - min;
-     }
+      if (currentValue > max) {
+        currentValue = max;
+        position = max - min;
+      }
 
-     li.innerHTML = Math.round(currentValue).toString();
+      li.innerHTML = Math.round(currentValue).toString();
 
-     this.scaleElements.push(li);
-     this.scale.append(li);
+      this.scaleElements.push(li);
+      this.scale.append(li);
 
-     this.setElementIndentation(position, quantity, li);
-   }
- }
-
- private handleScaleClick = (event: MouseEvent) => {
-  const { target } = event;
-
-  if (target && target instanceof HTMLElement && target.classList.contains('slider__scale')) {
-    const { isVertical, min, max } = this.options;
-    const { offsetY, offsetX } = event;
-
-    const position = isVertical
-      ? this.sliderSize - offsetY
-      : offsetX;
-
-    const ratio = position / this.sliderSize;
-    const newValue = ratio * (max - min) + min;
-
-    this.broadcastCorrectHandle(newValue);
+      this.setElementIndentation(position, quantity, li);
+    }
   }
-};
 
- private calculateNumbersQuantity(): { quantity: number, scaleStep: number } {
-   const { step, max, min, isVertical } = this.options;
+  private handleScaleClick = (event: MouseEvent) => {
+    const { target } = event;
 
-   let quantity = 0;
-   let liSize = 0;
+    if (
+      target &&
+      target instanceof HTMLElement &&
+      target.classList.contains("range-slider__scale")
+    ) {
+      const { isVertical, min, max } = this.options;
+      const { offsetY, offsetX } = event;
 
-   const rateOfVariation = max - min;
+      const position = isVertical ? this.sliderSize - offsetY : offsetX;
 
-   while (liSize <= this.sliderSize) {
-     quantity += 1;
-     const currentValue = max;
+      const ratio = position / this.sliderSize;
+      const newValue = ratio * (max - min) + min;
 
-     const li: HTMLElement = createElement("li", {
-       className: "range-slider__scale-number",
-     });
+      this.broadcastCorrectHandle(newValue);
+    }
+  };
 
-     li.innerHTML = Math.round(currentValue).toString();
-     this.scale.append(li);
+  private calculateNumbersQuantity(): { quantity: number; scaleStep: number } {
+    const { step, max, min, isVertical } = this.options;
 
-     liSize = isVertical
-       ? liSize += li.offsetHeight
-       : liSize += li.offsetWidth + li.offsetHeight / 2;
+    let quantity = 0;
+    let liSize = 0;
 
-     if (liSize === 0) {
-       liSize = this.sliderSize + quantity;
-     }
+    const rateOfVariation = max - min;
 
-     li.remove();
-   }
+    while (liSize <= this.sliderSize) {
+      quantity += 1;
+      const currentValue = max;
 
-   const scaleStep = (Math.ceil((rateOfVariation / quantity) / step) * step);
+      const li: HTMLElement = createElement("li", {
+        className: "range-slider__scale-number",
+      });
 
-   quantity = Math.ceil(rateOfVariation / scaleStep);
+      li.innerHTML = Math.round(currentValue).toString();
+      this.scale.append(li);
 
-   return {
-     quantity,
-     scaleStep
-   };
- }
+      liSize = isVertical
+        ? (liSize += li.offsetHeight)
+        : (liSize += li.offsetWidth + li.offsetHeight / 2);
 
- private setElementIndentation(position: number, count: number, li: HTMLElement) {
-   const { isVertical, max, min } = this.options;
-   const sliderSize = isVertical ? -this.sliderSize : this.sliderSize;
-   let liSize: number;
+      if (liSize === 0) {
+        liSize = this.sliderSize + quantity;
+      }
 
-   if (isVertical) {
-     liSize = li.offsetHeight / 2;
-     li.style.top = `${(-position /
-       (max - min)) *
-       -sliderSize - liSize - sliderSize}px`;
-   } else {
-     liSize = li.offsetWidth / 2;
-     li.style.left = `${(position /
-       (max - min)) *
-       sliderSize - liSize}px`;
-   }
- }
- private setClickListener() {
-  this.scale.addEventListener('click', this.handleScaleClick);
+      li.remove();
+    }
 
-  this.scaleElements.forEach(scaleElement => {
-    scaleElement.addEventListener('click', this.handleScaleElementClick);
-  });
-}
+    const scaleStep = Math.ceil(rateOfVariation / quantity / step) * step;
 
+    quantity = Math.ceil(rateOfVariation / scaleStep);
+
+    return {
+      quantity,
+      scaleStep,
+    };
+  }
+
+  private setElementIndentation(
+    position: number,
+    count: number,
+    li: HTMLElement
+  ) {
+    const { isVertical, max, min } = this.options;
+    const sliderSize = isVertical ? -this.sliderSize : this.sliderSize;
+    let liSize: number;
+
+    if (isVertical) {
+      liSize = li.offsetHeight / 2;
+      li.style.top = `${
+        (-position / (max - min)) * -sliderSize - liSize - sliderSize
+      }px`;
+    } else {
+      liSize = li.offsetWidth / 2;
+      li.style.left = `${(position / (max - min)) * sliderSize - liSize}px`;
+    }
+  }
+  private setClickListener() {
+    this.scale.addEventListener("click", this.handleScaleClick);
+
+    this.scaleElements.forEach((scaleElement) => {
+      scaleElement.addEventListener("click", this.handleScaleElementClick);
+    });
+  }
 }
 export default ScaleView;
