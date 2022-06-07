@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "parcel ./src/demo-page/demo-page.pug"
+    "dev": "parcel ./src/demo-page/demo-page.pug --open",
+    "build": "parcel ./src/*/*.pug --dist-dir public --public-url ../"
   },
   "keywords": [],
   "author": "",
