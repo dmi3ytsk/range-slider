@@ -10,15 +10,27 @@ html(lang="en")
    body 
       .demo-page
          h1.demo-page__title Range slider demo page
-      .slider-container.ez-range-slider     
-         .slider-container__slider
-         +slider-config
+         .slider-container.demo-page__slider-container.ez-range-slider     
+            .slider-container__range-slider
+            +slider-config
 
-      .slider-container.ez-range-slider(
-         data-show-bar = "true",
-         data-is-range = "false",
-         data-show-tip = "true"
-      )     
-         .slider-container__slider
-
+         .slider-container.demo-page__slider-container.ez-range-slider(
+            data-min = 0,
+            data-max = 150,
+            data-step = 2,
+            data-from-current-value = 44,
+            data-to-current-value = 100,
+            data-show-bar = "false",
+            data-is-range = "false",
+            data-show-tip = "true",
+            data-is-vertical = "false",
+            data-show-scale = "false"
+         )     
+            .slider-container__range-slider
+            +slider-config
+         
+         .slider-container.demo-page__slider-container.ez-range-slider     
+            .slider-container__range-slider
+      
+      
       script(src="./index.ts") 
