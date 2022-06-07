@@ -6,12 +6,12 @@
       background-color: white;
       margin: 20px 10px;
       border-radius: 5px;
-      
    }
    background: rgb(200, 234, 233);
    border-radius: 10px;
    max-width: 1160px;
    margin: 0 auto;
+   padding-bottom: 1px;
 }
 .slider-container {
    &__range-slider {
@@ -20,7 +20,12 @@
    &__slider-config {
       background: linear-gradient(rgb(237, 237, 237), white);
       border-radius: 5px;
-      margin: 15px 15px 0 15px;
+      margin: 0 auto;
+      margin-top: 15px;
+      padding-bottom: 15px;
+      max-width: 850px;
+   }
+   &:last-child {
       padding-bottom: 15px;
    }
 }
