@@ -1,10 +1,11 @@
 .range-slider {
    position: relative;
    width: 50%;
+   margin: 0 auto;
 
    &_vertical {
       width: 0.5rem;
-      height: 25rem;
+      height: 20rem;
 
       .range-slider {
          &__track {
@@ -28,24 +29,12 @@
                border-right: 0.25rem solid blueviolet;
                transform: rotate(180deg);
             }
-            &_hide {
-               display: none;
-               visibility: hidden;
-            }
          }
          &__bar {
             transform-origin: bottom;
-            &_hide {
-               display: none;
-               visibility: hidden;
-            }
          }
          &__scale {
             top: 0;
-            &_hide {
-               display: none;
-               visibility: hidden;
-            }
          }
          &__scale-number {
             position: absolute;
@@ -61,6 +50,7 @@
       height: 0.5rem;
       border-radius: 10px;
       background: lightgrey;
+      
    }
    &__bar {
       width: 100%;
@@ -68,10 +58,6 @@
       border-radius: 10px;
       background: lightblue;
       transform-origin: 0;
-      &_hide {
-         display: none;
-         visibility: hidden;
-      }
    }
    &__thumb {
       position: absolute;
@@ -138,10 +124,6 @@
       margin: 0;
       padding: 0;
       list-style: none;
-      &_hide {
-         display: none;
-         visibility: hidden;
-      }
 
       -webkit-touch-callout: none;
       -webkit-user-select: none;
