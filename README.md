@@ -14,15 +14,16 @@
 ```
   npm test
 ```
----
+
 ## Usage
 ```
 $(root).slider(sliderContainer);
 ```
-root - init selector, add data-attr here
-sliderContainer - slider container
+<i>root</i> - init selector, add data-attr here<br>
+<i>sliderContainer</i> - slider container
+ 
 ---
-example:
+example:<br>
 pug 
 ```
 .ez-slider-here(data-min=-10, data-max=20, data-is-range="false")
