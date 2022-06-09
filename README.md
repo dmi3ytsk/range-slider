@@ -15,12 +15,22 @@
   npm test
 ```
 ---
-
 ## Usage
-
 ```
-
-  
+$(root).slider(sliderContainer);
+```
+<i>root</i> - init selector, add data-attr here
+<i>sliderContainer</i> - slider container
+---
+example:
+pug 
+```
+.ez-slider-here(data-min=-10, data-max=20, data-is-range="false")
+   .ez-slider-container
+```
+js
+```
+$(".ez-slider-here").slider($(".ez-slider-container"));
 ```
 ---
 ## Parameters
