@@ -19,8 +19,8 @@
 ```
 $(root).slider(sliderContainer);
 ```
-<i>root</i> - init selector, add data-attr here
-<i>sliderContainer</i> - slider container
+root - init selector, add data-attr here
+sliderContainer - slider container
 ---
 example:
 pug 
