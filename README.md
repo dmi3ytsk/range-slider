@@ -49,4 +49,20 @@ $(".ez-slider-here").slider($(".ez-slider-container"));
 |showScale|Boolean|true|Show slider scale|
 |isVertical|Boolean|false|Vertical slider orientation when parameter is true|
 |isRange|Boolean|true|Slider type: range or single|
+
 ---
+## Application architecture description
+This application is built on MVC(MVP)-like architecture pattern with higher order component(Observer) and split layers.
+
+ #### Model
+ This layer is responsible for business logic and independent of other layers. Сan notify other layers about data changes using Observer.
+
+ #### View
+ This layer creating all slider elements, display it state, and View also responds to user interaction with slider.
+ 
+ #### Controller
+  This layer is responsible for interaction of the View and Model. Takes Model and View as parameters. Layer wait for messages from each other and responds to them through Observer
+
+---
+## UML Diagram
+  ![UML Diagram](https://github.com/dmi3ytsk/range-slider/blob/main/img/uml-diagram.jpg)
