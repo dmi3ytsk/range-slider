@@ -14,7 +14,6 @@ class Controller {
 
   public updateBooleanOptions(newOptions: UpdateBooleanOptions) {
     this.model.setBooleanOptions(newOptions);
-    console.log(newOptions)
   }
 
   public updateNumericOptions(newOptions: UpdateNumberOptions) {

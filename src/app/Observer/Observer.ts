@@ -1,5 +1,5 @@
 class Observer {
-  constructor(readonly listeners: any = { listener: [] }) {}
+  constructor(readonly listeners: any = { event: [] }) {}
 
   public subscribe(event: string, callback) {
     this.listeners[event] = this.listeners[event] || [];
