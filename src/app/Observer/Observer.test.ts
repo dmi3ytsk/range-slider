@@ -1,4 +1,3 @@
-import "jest";
 import Observer from "./Observer";
 const observer = new Observer();
 
