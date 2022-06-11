@@ -7,4 +7,5 @@ module.exports = {
   moduleFileExtensions: ["ts", "js", "json", "node"],
   collectCoverage: true,
   clearMocks: true,
+  testEnvironment: 'jsdom'
 };
