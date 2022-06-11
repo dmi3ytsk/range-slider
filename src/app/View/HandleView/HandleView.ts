@@ -45,7 +45,7 @@ class HandleView extends Observer {
 
   }
 
-  private createHandleElements() {
+  public createHandleElements() {
     const tipOn = this.options.showTip ? "" : "_hide";
 
     this.tip = createElement("div", {
@@ -64,7 +64,7 @@ class HandleView extends Observer {
     this.node.appendChild(this.handle);
   }
 
-  private setPosition() {
+  public setPosition() {
     const { isVertical, currentValue, ratio } = this.options;
     const sliderLength = isVertical ? -this.sliderSize : this.sliderSize;
     const positionVertical = sliderLength * ratio + this.sliderSize;
@@ -99,7 +99,7 @@ class HandleView extends Observer {
 
   };
 
-  private handleWindowMouseUp = () => {
+  public handleWindowMouseUp = () => {
     window.removeEventListener("mousemove", this.handleWindowMouseMove);
     window.removeEventListener("mouseup", this.handleWindowMouseUp);
   };
