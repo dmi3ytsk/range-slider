@@ -38,7 +38,7 @@ class HandleView extends Observer {
     this.sliderSize = size;
   }
 
-  private init() {
+  public init() {
     this.createHandleElements();
     this.setPosition();
     this.setDragListeners();
