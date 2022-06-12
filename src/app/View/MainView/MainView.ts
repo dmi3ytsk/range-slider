@@ -34,7 +34,7 @@ class View extends Observer {
     this.init();
   }
 
-  private init() {
+  public init() {
     this.slider = createElement("div", { className: "range-slider" });
 
     if (this.options.isVertical) {
