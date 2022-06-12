@@ -104,7 +104,6 @@ class SliderConfig {
       if (Number(target.value) - Number(min) < step) {
         target.value = (Number(min) + step).toString();
       }
-
       if (Number(target.value) < step) {
         target.value = step.toString();
       }
@@ -113,30 +112,20 @@ class SliderConfig {
 
   private checkMinData(target: HTMLInputElement) {
     const { max, step } = this.options;
-    let { value } = target;
 
     if (target.name === "min") {
-      if (Number(max) - Number(value) < step) {
-        value = (Number(max) - step).toString();
-      }
-
-      if (Number(value) < 0) {
-        value = "0";
+      if (Number(max) - Number(target.value) < step) {
+        target.value = (Number(max) - step).toString();
       }
     }
   }
 
   private checkStepData(target: HTMLInputElement) {
     const { max, min } = this.options;
-    let { value } = target;
 
     if (target.name === "step") {
-      if (Number(value) < 1) {
-        value = "1";
-      }
-
-      if (Number(value) > Number(max) - Number(min)) {
-        value = (Number(max) - Number(min)).toString();
+      if (Number(target.value) > Number(max) - Number(min)) {
+        target.value = (Number(max) - Number(min)).toString();
       }
     }
   }
