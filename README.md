@@ -2,6 +2,14 @@
 
 [Demo page](https://dmi3ytsk.github.io/range-slider/public/demo-page/demo-page.html)
  
+## Clone
+```
+  git clone https://github.com/dmi3ytsk/range-slider.git
+```
+## JQuery first!
+```
+  npm install jquery
+```
 ## Build
 ```
   npm run build
