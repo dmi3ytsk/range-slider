@@ -98,13 +98,17 @@ class ScaleView extends Observer {
         currentValue = max;
         position = max - min;
       }
-
       li.innerHTML = Math.round(currentValue).toString();
 
       this.scaleElements.push(li);
       this.scale.append(li);
 
       this.setElementIndentation(position, quantity, li);
+    }
+    const preLastValue = parseInt((this.scaleElements[this.scaleElements.length-2].innerHTML), 10);
+    const lastValue = parseInt((this.scaleElements[this.scaleElements.length-1].innerHTML), 10);
+    if (preLastValue + scaleStep / 2 > lastValue) {
+      this.scaleElements[this.scaleElements.length-2].innerHTML=""
     }
   }
 
@@ -133,7 +137,6 @@ class ScaleView extends Observer {
 
     let quantity = 0;
     let liSize = 0;
-
     const rateOfVariation = max - min;
 
     while (liSize <= this.sliderSize) {
@@ -149,7 +152,7 @@ class ScaleView extends Observer {
 
       liSize = isVertical
         ? (liSize += li.offsetHeight)
-        : (liSize += li.offsetWidth + li.offsetHeight / 2);
+        : (liSize += li.offsetWidth*1.5);
 
       if (liSize === 0) {
         liSize = this.sliderSize + quantity;
