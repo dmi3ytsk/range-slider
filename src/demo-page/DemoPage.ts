@@ -17,7 +17,7 @@ class DemoPage {
 
   public init(options: GlobalOptions) {
     const sliderConfig: HTMLFormElement = this.root.querySelector(
-      ".ez-range-slider-config"
+      ".js-ez-range-slider-config"
     );
 
     this.$slider = $(this.root).slider(this.sliderContainer, options);

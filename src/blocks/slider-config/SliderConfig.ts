@@ -46,7 +46,7 @@ class SliderConfig {
   };
 
   public initInputs() {
-    const inputs = this.root.querySelectorAll(".input__field");
+    const inputs = this.root.querySelectorAll(".js-input__field");
 
     inputs.forEach((input) => {
       for (const prop in this.options) {
@@ -58,7 +58,7 @@ class SliderConfig {
   }
 
   private setOnInputChangeListener() {
-    const inputs = this.root.querySelectorAll(".input__field");
+    const inputs = this.root.querySelectorAll(".js-input__field");
 
     inputs.forEach((input) => {
       if (input instanceof HTMLInputElement) {
@@ -84,7 +84,7 @@ class SliderConfig {
   };
 
   private initCheckboxes() {
-    const checkboxes = this.root.querySelectorAll(".checkbox__box");
+    const checkboxes = this.root.querySelectorAll(".js-checkbox__box");
 
     checkboxes.forEach((checkbox) => {
       for (const prop in this.options) {
@@ -131,7 +131,7 @@ class SliderConfig {
   }
 
   private setOnCheckboxChangeListener() {
-    const checkboxes = this.root.querySelectorAll(".checkbox__box");
+    const checkboxes = this.root.querySelectorAll(".js-checkbox__box");
 
     checkboxes.forEach((checkbox) => {
       if (checkbox instanceof HTMLInputElement) {
