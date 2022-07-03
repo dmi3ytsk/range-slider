@@ -2,10 +2,9 @@ mixin input(options)
   - const { name="", label="", min="0", step="1" } = options
   .input
     label.input__content=label
-    input(
-      type="number" 
-      id=name 
-      name=name 
-      min=min 
-      step=step 
-    ).input__field
+      input(
+        type="number" 
+        name=name 
+        min=min 
+        step=step 
+      ).input__field
