@@ -1,15 +1,15 @@
 .checkbox {
-   display: flex;
-   padding: 5px;
-   background: rgb(242, 191, 251);
-   font-size: 18px;
-   border-radius: 5px;
-   margin: 5px;
-   &__content {
-      margin-right: 5px;
-      font-weight: bold;
-   }
-   &__box {
-      margin: 3px;
-   }
+  display: flex;
+  padding: 5px;
+  background: rgb(242, 191, 251);
+  font-size: 18px;
+  border-radius: 5px;
+  margin: 5px;
+  &__content {
+    margin-right: 5px;
+    font-weight: bold;
+  }
+  &__box {
+    margin: 3px;
+  }
 }
