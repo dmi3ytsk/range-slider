@@ -73,7 +73,8 @@ class View extends Observer {
       fromCurrentValue,
       toCurrentValue,
       showBar,
-      showTip
+      showTip,
+      step,
     } = this.options;
     const { ratios } = this;
 
@@ -85,6 +86,7 @@ class View extends Observer {
       showBar,
       showTip,
       ratios,
+      step,
     });
   };
 
@@ -96,6 +98,7 @@ class View extends Observer {
       toCurrentValue,
       isRange,
       showTip,
+      step,
     } = this.options;
     const { ratios } = this;
 
@@ -107,6 +110,7 @@ class View extends Observer {
       showBar,
       showTip,
       ratios,
+      step
     };
   }
 

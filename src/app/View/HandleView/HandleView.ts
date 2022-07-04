@@ -80,7 +80,16 @@ class HandleView extends Observer {
       this.thumb.style.left = `${position}px`;
       this.tip.style.left = `${position}px`;
     }
-    this.tip.innerText = currentValue.toFixed().toString();
+    if (!Number.isInteger(Number(this.options.step)) && currentValue) {
+      this.tip.innerHTML= currentValue.toFixed(
+        this.options.step
+          .toString()
+          .split("." || ",")
+          .pop().length
+      );
+    } else {
+      this.tip.innerHTML = currentValue.toFixed().toString();
+    }
   }
 
   private handleWindowMouseMove = (event: MouseEvent) => {

@@ -28,6 +28,7 @@ class TrackView extends Observer {
       fromCurrentValue,
       toCurrentValue,
       ratios: { fromRatio, toRatio },
+      step,
     } = this.options;
     if (isRange) {
       this.handles = [
@@ -37,6 +38,7 @@ class TrackView extends Observer {
           showTip,
           currentValue: fromCurrentValue,
           ratio: fromRatio,
+          step,
         }),
         new HandleView(this.track, {
           isVertical,
@@ -44,6 +46,7 @@ class TrackView extends Observer {
           showTip,
           currentValue: toCurrentValue,
           ratio: toRatio,
+          step,
         }),
       ];
     } else {
@@ -54,6 +57,7 @@ class TrackView extends Observer {
           showTip,
           currentValue: fromCurrentValue,
           ratio: fromRatio,
+          step,
         }),
       ];
     }
@@ -95,6 +99,7 @@ class TrackView extends Observer {
       toCurrentValue,
       isRange,
       ratios: { fromRatio, toRatio },
+      step,
     } = options;
 
     this.handles.forEach((handle, index) => {
@@ -106,6 +111,7 @@ class TrackView extends Observer {
               showTip,
               currentValue: fromCurrentValue,
               ratio: fromRatio,
+              step: step,
             }
           : {
               isVertical,
@@ -113,6 +119,7 @@ class TrackView extends Observer {
               showTip,
               currentValue: toCurrentValue,
               ratio: toRatio,
+              step: step,
             };
       handle.updateSliderSize(this.sliderSize);
       handle.updateOptions(newOptions);

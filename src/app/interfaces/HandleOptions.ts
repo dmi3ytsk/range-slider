@@ -4,5 +4,6 @@ export interface HandleOptions {
   showTip: boolean,
   currentValue: number,
   ratio: number,
+  step: number,
 }
 

@@ -6,4 +6,5 @@ export interface TrackOptions {
   fromCurrentValue: number,
   toCurrentValue: number,
   ratios: { fromRatio: number, toRatio: number },
+  step: number,
 }
