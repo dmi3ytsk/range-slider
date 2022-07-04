@@ -105,8 +105,8 @@ class ScaleView extends Observer {
 
       this.setElementIndentation(position, quantity, li);
     }
-    const preLastValue = parseInt((this.scaleElements[this.scaleElements.length-2].innerHTML), 10);
-    const lastValue = parseInt((this.scaleElements[this.scaleElements.length-1].innerHTML), 10);
+    const preLastValue = Number(this.scaleElements[this.scaleElements.length-2].innerHTML);
+    const lastValue = Number(this.scaleElements[this.scaleElements.length-1].innerHTML);
     if (preLastValue + scaleStep / 2 > lastValue) {
       this.scaleElements[this.scaleElements.length-2].innerHTML=""
     }
