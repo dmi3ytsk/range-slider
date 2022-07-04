@@ -81,7 +81,7 @@ class ScaleView extends Observer {
   }
 
   private createAllScaleValues() {
-    const { max, min } = this.options;
+    const { max, min, step } = this.options;
     const { quantity, scaleStep } = this.calculateNumbersQuantity();
     let value: number = 0;
 
@@ -98,17 +98,30 @@ class ScaleView extends Observer {
         currentValue = max;
         position = max - min;
       }
-      li.innerHTML = Math.round(currentValue).toString();
+      if (!Number.isInteger(Number(step))) {
+        li.innerHTML = currentValue.toFixed(
+          step
+            .toString()
+            .split("." || ",")
+            .pop().length
+        );
+      } else {
+        li.innerHTML = Math.round(currentValue).toString();
+      }
 
       this.scaleElements.push(li);
       this.scale.append(li);
 
       this.setElementIndentation(position, quantity, li);
     }
-    const preLastValue = Number(this.scaleElements[this.scaleElements.length-2].innerHTML);
-    const lastValue = Number(this.scaleElements[this.scaleElements.length-1].innerHTML);
+    const preLastValue = Number(
+      this.scaleElements[this.scaleElements.length - 2].innerHTML
+    );
+    const lastValue = Number(
+      this.scaleElements[this.scaleElements.length - 1].innerHTML
+    );
     if (preLastValue + scaleStep / 2 > lastValue) {
-      this.scaleElements[this.scaleElements.length-2].innerHTML=""
+      this.scaleElements[this.scaleElements.length - 2].innerHTML = "";
     }
   }
 
@@ -146,13 +159,21 @@ class ScaleView extends Observer {
       const li: HTMLElement = createElement("li", {
         className: "range-slider__scale-number",
       });
-
-      li.innerHTML = Math.round(currentValue).toString();
+      if (!Number.isInteger(Number(step))) {
+        li.innerHTML = currentValue.toFixed(
+          step
+            .toString()
+            .split("." || ",")
+            .pop().length
+        );
+      } else {
+        li.innerHTML = Math.round(currentValue).toString();
+      }
       this.scale.append(li);
 
       liSize = isVertical
         ? (liSize += li.offsetHeight)
-        : (liSize += li.offsetWidth*1.5);
+        : (liSize += li.offsetWidth * 1.5);
 
       if (liSize === 0) {
         liSize = this.sliderSize + quantity;

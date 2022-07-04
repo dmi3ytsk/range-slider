@@ -104,6 +104,14 @@ class SliderConfig {
       if (Number(target.value) < Number(min)) {
         target.value = (Number(min) + step).toString();
       }
+      else if(!Number.isInteger(Number(step))) {
+        target.value = Number(target.value).toFixed(
+          step
+            .toString()
+            .split("." || ",")
+            .pop().length
+        );
+      }
     }
   }
 
@@ -114,6 +122,14 @@ class SliderConfig {
       if (Number(max) < Number(target.value)) {
         target.value = (Number(max) - step).toString();
       }
+      else if(!Number.isInteger(Number(step))) {
+        target.value = Number(target.value).toFixed(
+          step
+            .toString()
+            .split("." || ",")
+            .pop().length
+        );
+      }
     }
   }
 
@@ -123,6 +139,9 @@ class SliderConfig {
     if (target.name === "step") {
       if (Number(target.value) > Number(max) - Number(min)) {
         target.value = (Number(max) - Number(min)).toString();
+      }
+      else if (!Number.isInteger(Number(target.value))) {
+        target.value=target.value;
       }
     }
   }
