@@ -34,12 +34,12 @@ class SliderConfig {
 
         if (name === "toCurrentValue") {
           newValue = data.toCurrentValue;
-          input.value = Math.round(newValue).toString();
+          input.value = newValue.toString();
         }
 
         if (name === "fromCurrentValue") {
           newValue = data.fromCurrentValue;
-          input.value = Math.round(newValue).toString();
+          input.value = newValue.toString();
         }
       }
     );
