@@ -21,6 +21,21 @@ html(lang="en")
         +slider-config
 
       .slider-container.demo-page__slider-container.ez-range-slider.js-ez-range-slider(
+        data-min = -1,
+        data-max = 2,
+        data-step = 0.15,
+        data-from-current-value = -1,
+        data-to-current-value = 2,
+        data-show-bar = "false",
+        data-is-range = "true",
+        data-show-tip = "true",
+        data-is-vertical = "false",
+        data-show-scale = "true"
+      )     
+        .slider-container__range-slider.js-slider-container__range-slider
+        +slider-config
+
+      .slider-container.demo-page__slider-container.ez-range-slider.js-ez-range-slider(
         data-min = -10,
         data-max = 7,
         data-step = 6,
@@ -34,7 +49,7 @@ html(lang="en")
       )     
         .slider-container__range-slider.js-slider-container__range-slider
         +slider-config
-
+      
       .slider-container.demo-page__slider-container.ez-range-slider.js-ez-range-slider(
         data-min = -30,
         data-max = 30,
