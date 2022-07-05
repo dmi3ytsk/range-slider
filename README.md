@@ -1,6 +1,6 @@
 # ez-range-slider
 
-[Demo page](https://dmi3ytsk.github.io/range-slider/public/demo-page/demo-page.html)
+[Demo page](https://dmi3ytsk.github.io/range-slider/public/)
  
 ## Clone
 ```
