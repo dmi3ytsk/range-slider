@@ -34,12 +34,30 @@ class SliderConfig {
 
         if (name === "toCurrentValue") {
           newValue = data.toCurrentValue;
-          input.value = newValue.toString();
+          if (!Number.isInteger(Number(data.step)) && newValue) {
+            input.value = newValue.toFixed(
+              data.step
+                .toString()
+                .split("." || ",")
+                .pop().length
+            );
+          } else {
+            input.value = newValue.toString();
+          }
         }
 
         if (name === "fromCurrentValue") {
           newValue = data.fromCurrentValue;
-          input.value = newValue.toString();
+          if (!Number.isInteger(Number(data.step)) && newValue) {
+            input.value = newValue.toFixed(
+              data.step
+                .toString()
+                .split("." || ",")
+                .pop().length
+            );
+          } else {
+            input.value = newValue.toString();
+          }
         }
       }
     );
