@@ -5,7 +5,7 @@
   "scripts": {
     "test": "jest --config ./jest.config.js",
     "dev": "parcel ./src/demo-page/demo-page.pug --open",
-    "build": "parcel ./src/*/*.pug --dist-dir public --public-url ../"
+    "build": "parcel build ./src/*/*.pug --dist-dir public --public-url ../" 
   },
   "keywords": [],
   "author": "",
