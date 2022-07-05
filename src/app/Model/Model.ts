@@ -83,7 +83,7 @@ class Model extends Observer {
 
     this.changeData(newData);
     this.causeNecessaryDependence(optionName, optionState);
-    this.broadcast("updateNumericOptions", newData); 
+    this.broadcast("updateNumericOptions", newData);
   }
 
   public getData = (): GlobalOptions => {
@@ -106,7 +106,6 @@ class Model extends Observer {
   }
 
   public changeFromCurrentValue = (FromRatio: number) => {
-    
     const { max, min } = this.data;
     const possibleCurrentValue = FromRatio * (max - min) + min;
 
@@ -151,13 +150,22 @@ class Model extends Observer {
   }
 
   private returnSelectedValue(newData: Partial<GlobalOptions>) {
-    const { step, fromCurrentValue, toCurrentValue } = this.data;
+    const { step, fromCurrentValue, toCurrentValue, min } = this.data;
     let currentValue: number;
 
     if (newData.fromCurrentValue) {
       currentValue = newData.fromCurrentValue;
       if (currentValue + step >= toCurrentValue) {
-        newData = { fromCurrentValue: toCurrentValue - step };
+        if (
+          !Number.isInteger((Math.abs(min) + Math.abs(toCurrentValue)) / step)
+        ) {
+          newData = {
+            fromCurrentValue:
+              Math.floor((Math.abs(min) + Math.abs(toCurrentValue)) / step) *
+                step +
+              min,
+          };
+        } else newData = { fromCurrentValue: toCurrentValue - step };
         return newData;
       }
     } else {
