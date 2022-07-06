@@ -1,4 +1,8 @@
+import JQuery from "jquery";
+
 import { GlobalOptions } from "../../app/interfaces/GlobalOptions";
+
+(<any>window).$ = (<any>window).jQuery = JQuery;
 
 class SliderConfig {
   options: GlobalOptions;
@@ -7,6 +11,8 @@ class SliderConfig {
 
   constructor(public $slider: JQuery<Element>, public root: HTMLFormElement) {
     this.init();
+    this.$slider = $slider;
+    this.root = root;
   }
 
   public init() {
@@ -15,7 +21,7 @@ class SliderConfig {
     this.$slider.slider(
       this.sliderContainer,
       "checkUpdates",
-      this.updateCurrentValues
+      this.updateCurrentValues,
     );
 
     this.initInputs();
@@ -39,7 +45,7 @@ class SliderConfig {
               data.step
                 .toString()
                 .split("." || ",")
-                .pop().length
+                .pop().length,
             );
           } else {
             input.value = newValue.toString();
@@ -53,13 +59,13 @@ class SliderConfig {
               data.step
                 .toString()
                 .split("." || ",")
-                .pop().length
+                .pop().length,
             );
           } else {
             input.value = newValue.toString();
           }
         }
-      }
+      },
     );
   };
 
@@ -67,11 +73,11 @@ class SliderConfig {
     const inputs = this.root.querySelectorAll(".js-input__field");
 
     inputs.forEach((input) => {
-      for (const prop in this.options) {
+      Object.keys(this.options).forEach((prop) => {
         if (input instanceof HTMLInputElement && input.name === prop) {
           input.value = this.options[prop].toString();
         }
-      }
+      });
     });
   }
 
@@ -105,13 +111,13 @@ class SliderConfig {
     const checkboxes = this.root.querySelectorAll(".js-checkbox__box");
 
     checkboxes.forEach((checkbox) => {
-      for (const prop in this.options) {
+      Object.keys(this.options).forEach((prop) => {
         if (checkbox instanceof HTMLInputElement && checkbox.name === prop) {
           if (typeof this.options[prop] === "boolean") {
             checkbox.checked = Boolean(this.options[prop]);
           }
         }
-      }
+      });
     });
   }
 
@@ -121,13 +127,12 @@ class SliderConfig {
     if (target.name === "max") {
       if (Number(target.value) < Number(min)) {
         target.value = (Number(min) + step).toString();
-      }
-      else if(!Number.isInteger(Number(step))) {
+      } else if (!Number.isInteger(Number(step))) {
         target.value = Number(target.value).toFixed(
           step
             .toString()
             .split("." || ",")
-            .pop().length
+            .pop().length,
         );
       }
     }
@@ -139,13 +144,12 @@ class SliderConfig {
     if (target.name === "min") {
       if (Number(max) < Number(target.value)) {
         target.value = (Number(max) - step).toString();
-      }
-      else if(!Number.isInteger(Number(step))) {
+      } else if (!Number.isInteger(Number(step))) {
         target.value = Number(target.value).toFixed(
           step
             .toString()
             .split("." || ",")
-            .pop().length
+            .pop().length,
         );
       }
     }
@@ -157,9 +161,9 @@ class SliderConfig {
     if (target.name === "step") {
       if (Number(target.value) > Number(max) - Number(min)) {
         target.value = (Number(max) - Number(min)).toString();
-      }
-      else if (!Number.isInteger(Number(target.value))) {
-        target.value=target.value;
+      } else if (!Number.isInteger(Number(target.value))) {
+        // eslint-disable-next-line no-self-assign
+        target.value = target.value;
       }
     }
   }
