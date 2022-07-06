@@ -16,7 +16,7 @@ describe("Test Observer", () => {
     const reverseBoolean = (data) => data.state;
     observer.subscribe("ReturnBoolean", reverseBoolean);
 
-    test("Сallback work correctly", () => {
+    test("Callback work correctly", () => {
       expect(observer.listeners.ReturnBoolean[0]).toBe(realBoolean);
       expect(observer.listeners.ReturnBoolean[0](false)).toBeFalsy();
 

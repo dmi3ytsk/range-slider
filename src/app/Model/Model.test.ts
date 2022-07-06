@@ -15,9 +15,9 @@ const testOptions = {
 };
 
 const broadcast = jest.spyOn(Model.prototype, "broadcast");
-const changeStepDependences = jest.spyOn(
+const changeStepDependence = jest.spyOn(
   Model.prototype,
-  "changeStepDependences"
+  "changeStepDependence"
 );
 const setNumberOptions = jest.spyOn(Model.prototype, "setNumberOptions");
 const changeData = jest.spyOn(Model.prototype, "changeData");
@@ -27,7 +27,7 @@ let testModel: Model;
 describe("Test model", () => {
   afterEach(() => {
     broadcast.mockClear();
-    changeStepDependences.mockClear();
+    changeStepDependence.mockClear();
     setNumberOptions.mockClear();
     changeData.mockClear();
   });
@@ -171,7 +171,7 @@ describe("Test model", () => {
       expect(testModel.data.isVertical).toBeTruthy();
     });
 
-    test("Call changeIntervalDependences", () => {
+    test("Call changeIntervalDependence", () => {
       testModel.setBooleanOptions({
         optionState: true,
         optionName: "isRange",
@@ -221,7 +221,7 @@ describe("Test model", () => {
 
     test("Call necessary dependent methods", () => {
       testModel.setNumberOptions({ optionState: 5, optionName: "step" });
-      expect(changeStepDependences).toBeCalledTimes(1);
+      expect(changeStepDependence).toBeCalledTimes(1);
 
       testModel.setNumberOptions({ optionState: 700, optionName: "max" });
       testModel.setNumberOptions({ optionState: 5, optionName: "min" });
@@ -235,24 +235,24 @@ describe("Test model", () => {
     });
   });
 
-  describe("changeStepDependences method", () => {
+  describe("changeStepDependence method", () => {
     test("Call changeData with correct condition", () => {
-      testModel.changeStepDependences(1);
+      testModel.changeStepDependence(1);
       expect(broadcast).toBeCalled();
 
-      testModel.changeStepDependences(3);
+      testModel.changeStepDependence(3);
       expect(broadcast).toBeCalled();
 
       testModel.data.fromCurrentValue = 0;
       testModel.data.toCurrentValue = 0;
 
-      testModel.changeStepDependences(7);
+      testModel.changeStepDependence(7);
       expect(broadcast).toBeCalled();
 
       testModel.data.fromCurrentValue = 500;
       testModel.data.toCurrentValue = 500;
 
-      testModel.changeStepDependences(7);
+      testModel.changeStepDependence(7);
       expect(broadcast).toBeCalled();
     });
   });

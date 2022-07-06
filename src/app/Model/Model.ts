@@ -50,7 +50,7 @@ class Model extends Observer {
     }
 
     if (optionName === "showBar") {
-      this.changeIntervalDependences();
+      this.changeIntervalDependence();
     }
 
     this.changeData(newData);
@@ -94,7 +94,7 @@ class Model extends Observer {
     return this.ratios;
   }
 
-  public changeStepDependences(step: number) {
+  public changeStepDependence(step: number) {
     this.checkRemainder(step);
 
     const { fromCurrentValue, toCurrentValue } = this.data;
@@ -188,7 +188,7 @@ class Model extends Observer {
     this.calculateNewRatios();
     this.broadcast("changeData", this.data);
   }
-  private changeIntervalDependences() {
+  private changeIntervalDependence() {
     const { toCurrentValue, fromCurrentValue, step, min } = this.data;
 
     if (fromCurrentValue >= toCurrentValue) {
@@ -218,17 +218,17 @@ class Model extends Observer {
     optionState: number
   ) {
     if (optionName === "step") {
-      this.changeStepDependences(optionState);
+      this.changeStepDependence(optionState);
     }
     if (optionName === "max") {
-      this.changeMaxDependences(optionState);
+      this.changeMaxDependence(optionState);
     }
     if (optionName === "min") {
-      this.changeMinDependences(optionState);
+      this.changeMinDependence(optionState);
     }
   }
 
-  private changeMaxDependences(max: number) {
+  private changeMaxDependence(max: number) {
     const { fromCurrentValue, step, toCurrentValue } = this.data;
     if (max <= fromCurrentValue) {
       const newValue = {
@@ -249,7 +249,7 @@ class Model extends Observer {
     this.setNumberOptions({ optionState: step, optionName: "step" });
   }
 
-  private changeMinDependences(min: number) {
+  private changeMinDependence(min: number) {
     const { fromCurrentValue, step, toCurrentValue } = this.data;
     if (min >= fromCurrentValue) {
       const newValue = {

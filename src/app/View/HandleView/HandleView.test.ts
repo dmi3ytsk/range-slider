@@ -10,6 +10,7 @@ const testOptions = {
   showTip: true,
   isVertical: false,
   ratio: 0.5,
+  step: 1,
 };
 
 let handleView: HandleView;

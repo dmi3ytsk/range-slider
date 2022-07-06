@@ -10,6 +10,7 @@ const testOptions = {
   showTip: true,
   isVertical: false,
   ratios: { fromRatio: 0.5, toRatio: 0.8 },
+  step: 1,
 };
 
 let trackView: TrackView;
