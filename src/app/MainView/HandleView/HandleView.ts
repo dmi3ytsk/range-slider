@@ -42,7 +42,7 @@ class HandleView extends Observer {
     this.createHandleElements();
     this.setPosition();
     this.setDragListeners();
-
+    // this.setTouchDragListeners();
   }
 
   public createHandleElements() {
@@ -81,7 +81,7 @@ class HandleView extends Observer {
       this.tip.style.left = `${position}px`;
     }
     if (!Number.isInteger(Number(this.options.step)) && currentValue) {
-      this.tip.innerHTML= currentValue.toFixed(
+      this.tip.innerHTML = currentValue.toFixed(
         this.options.step
           .toString()
           .split("." || ",")
@@ -105,7 +105,6 @@ class HandleView extends Observer {
       ? (this.sliderSize - position) / this.sliderSize
       : position / this.sliderSize;
     this.broadcast("dragHandle", value);
-
   };
 
   public handleWindowMouseUp = () => {
@@ -135,6 +134,24 @@ class HandleView extends Observer {
       window.addEventListener("mouseup", this.handleWindowMouseUp);
     }
   };
+//-touch events in progress
+  // private handleWindowTouchMove = (event: TouchEvent) => {
+  //   const { isVertical } = this.options;
+  //   const { clientX, clientY, offsetLeft, offsetTop, offsetHeight } =
+  //     this.positionOptions;
+
+  // };
+
+  // private handleWindowTouchEnd = () => {
+  // };
+
+  // private setTouchDragListeners() {
+  //   this.handle.addEventListener("touchstart", this.handleRunnerTouchStart)
+  // }
+
+  // private handleRunnerTouchStart = (event: TouchEvent) => {
+  // };
+
 }
 
 export default HandleView;

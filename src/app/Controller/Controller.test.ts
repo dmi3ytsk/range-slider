@@ -5,7 +5,7 @@
 
 import Controller from "./Controller";
 import Model from "../Model/Model";
-import View from "../View/MainView/MainView";
+import View from "../MainView/View/View";
 
 document.body.innerHTML = '<div class="js-slider"></div>';
 

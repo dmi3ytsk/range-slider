@@ -1,6 +1,6 @@
 import "../app/app.scss";
 import Model from "../app/Model/Model";
-import View from "../app/View/MainView/MainView";
+import View from "./MainView/View/View";
 import Controller from "../app/Controller/Controller";
 import { GlobalOptions } from "../app/interfaces/GlobalOptions";
 import { ControllerOptionsMethods } from "../app/interfaces/ControllerOptionsMethods";

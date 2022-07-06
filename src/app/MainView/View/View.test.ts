@@ -1,5 +1,5 @@
 import Model from "../../Model/Model";
-import View from "./MainView";
+import View from "./View";
 import TrackView from "../TrackView/TrackView";
 import ScaleView from "../ScaleView/ScaleView";
 

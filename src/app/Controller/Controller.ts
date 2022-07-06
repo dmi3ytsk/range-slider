@@ -1,5 +1,5 @@
 import Model from "../Model/Model";
-import View from "../View/MainView/MainView";
+import View from "../MainView/View/View";
 import { GlobalOptions } from "../interfaces/GlobalOptions";
 import {
   UpdateBooleanOptions,
