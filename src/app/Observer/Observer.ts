@@ -1,5 +1,7 @@
 class Observer {
-  constructor(readonly listeners: any = { event: [] }) {}
+  constructor(readonly listeners: any = { event: [] }) {
+    this.listeners = listeners;
+  }
 
   public subscribe(event: string, callback) {
     this.listeners[event] = this.listeners[event] || [];
@@ -8,9 +10,7 @@ class Observer {
 
   public broadcast(event: string, data: any) {
     if (this.listeners[event]) {
-      this.listeners[event].forEach((callback: (data: {}) => void) =>
-        callback(data),
-      );
+      this.listeners[event].forEach((callback: (spec: any) => void) => callback(data));
     }
   }
 }

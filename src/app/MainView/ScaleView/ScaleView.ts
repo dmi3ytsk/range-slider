@@ -54,14 +54,14 @@ class ScaleView extends Observer {
   };
 
   private broadcastCorrectHandle(newValue: number) {
-    const { toCurrentValue, fromCurrentValue, isRange, min, max } =
-      this.options;
-    const proximityCondition =
-      Math.abs(toCurrentValue - newValue) >
-      Math.abs(fromCurrentValue - newValue);
+    const {
+      toCurrentValue, fromCurrentValue, isRange, min, max,
+    } = this.options;
+    const isCloseEnough = Math.abs(toCurrentValue - newValue)
+      > Math.abs(fromCurrentValue - newValue);
     const ratio = (newValue - min) / (max - min);
 
-    if (!isRange || proximityCondition) {
+    if (!isRange || isCloseEnough) {
       this.broadcast("scaleClick", {
         handleNumber: 1,
         ratio,
@@ -103,7 +103,7 @@ class ScaleView extends Observer {
           step
             .toString()
             .split("." || ",")
-            .pop().length
+            .pop().length,
         );
       } else {
         li.innerHTML = Math.round(currentValue).toString();
@@ -112,13 +112,13 @@ class ScaleView extends Observer {
       this.scaleElements.push(li);
       this.scale.append(li);
 
-      this.setElementIndentation(position, quantity, li);
+      this.setElementIndentation(position, li);
     }
     const preLastValue = Number(
-      this.scaleElements[this.scaleElements.length - 2].innerHTML
+      this.scaleElements[this.scaleElements.length - 2].innerHTML,
     );
     const lastValue = Number(
-      this.scaleElements[this.scaleElements.length - 1].innerHTML
+      this.scaleElements[this.scaleElements.length - 1].innerHTML,
     );
     if (preLastValue + scaleStep / 2 > lastValue) {
       this.scaleElements[this.scaleElements.length - 2].innerHTML = "";
@@ -129,9 +129,9 @@ class ScaleView extends Observer {
     const { target } = event;
 
     if (
-      target &&
-      target instanceof HTMLElement &&
-      target.classList.contains("range-slider__scale")
+      target
+      && target instanceof HTMLElement
+      && target.classList.contains("range-slider__scale")
     ) {
       const { isVertical, min, max } = this.options;
       const { offsetY, offsetX } = event;
@@ -146,7 +146,9 @@ class ScaleView extends Observer {
   };
 
   private calculateNumbersQuantity(): { quantity: number; scaleStep: number } {
-    const { step, max, min, isVertical } = this.options;
+    const {
+      step, max, min, isVertical,
+    } = this.options;
 
     let quantity = 0;
     let liSize = 0;
@@ -164,7 +166,7 @@ class ScaleView extends Observer {
           step
             .toString()
             .split("." || ",")
-            .pop().length
+            .pop().length,
         );
       } else {
         li.innerHTML = Math.round(currentValue).toString();
@@ -194,8 +196,7 @@ class ScaleView extends Observer {
 
   private setElementIndentation(
     position: number,
-    count: number,
-    li: HTMLElement
+    li: HTMLElement,
   ) {
     const { isVertical, max, min } = this.options;
     const sliderSize = isVertical ? -this.sliderSize : this.sliderSize;
@@ -211,6 +212,7 @@ class ScaleView extends Observer {
       li.style.left = `${(position / (max - min)) * sliderSize - liSize}px`;
     }
   }
+
   private setClickListener() {
     this.scale.addEventListener("click", this.handleScaleClick);
 

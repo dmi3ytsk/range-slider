@@ -58,7 +58,7 @@ class HandleView extends Observer {
       "div",
       { className: "range-slider__handle" },
       this.thumb,
-      this.tip
+      this.tip,
     );
 
     this.node.appendChild(this.handle);
@@ -85,7 +85,7 @@ class HandleView extends Observer {
         this.options.step
           .toString()
           .split("." || ",")
-          .pop().length
+          .pop().length,
       );
     } else {
       this.tip.innerHTML = currentValue.toFixed().toString();
@@ -94,8 +94,9 @@ class HandleView extends Observer {
 
   private handleWindowMouseMove = (event: MouseEvent) => {
     const { isVertical } = this.options;
-    const { clientX, clientY, offsetLeft, offsetTop, offsetHeight } =
-      this.positionOptions;
+    const {
+      clientX, clientY, offsetLeft, offsetTop, offsetHeight,
+    } = this.positionOptions;
 
     const position = isVertical
       ? offsetTop + event.clientY - clientY + offsetHeight / 2

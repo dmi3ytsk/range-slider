@@ -17,7 +17,7 @@ const testOptions = {
 const broadcast = jest.spyOn(Model.prototype, "broadcast");
 const changeStepDependence = jest.spyOn(
   Model.prototype,
-  "changeStepDependence"
+  "changeStepDependence",
 );
 const setNumberOptions = jest.spyOn(Model.prototype, "setNumberOptions");
 const changeData = jest.spyOn(Model.prototype, "changeData");

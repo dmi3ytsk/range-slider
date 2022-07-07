@@ -6,4 +6,3 @@ export interface HandleOptions {
   ratio: number,
   step: number,
 }
-

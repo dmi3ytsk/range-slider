@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 // React.createElement on vanilla js, source:
 // https://gist.github.com/devianllert/7d19d7746d2a3bf7e7e0ebdbd69cb6fb
 

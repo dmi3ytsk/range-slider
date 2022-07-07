@@ -1,4 +1,5 @@
 import Observer from "./Observer";
+
 const observer = new Observer();
 
 describe("Test Observer", () => {

@@ -41,14 +41,14 @@ describe("Track view", () => {
       expect(trackView.handles).toBeInstanceOf(Array);
 
       expect(trackView.handles).toEqual(
-        expect.arrayContaining([expect.any(HandleView)])
+        expect.arrayContaining([expect.any(HandleView)]),
       );
 
       trackView.options.isRange = true;
       trackView.initTrackElements();
 
       expect(trackView.handles).toEqual(
-        expect.arrayContaining([expect.any(HandleView), expect.any(HandleView)])
+        expect.arrayContaining([expect.any(HandleView), expect.any(HandleView)]),
       );
     });
 

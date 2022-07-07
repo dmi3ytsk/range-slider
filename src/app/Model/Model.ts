@@ -3,7 +3,6 @@ import defaultAttributes from "../const";
 import { GlobalOptions } from "../interfaces/GlobalOptions";
 import { Ratios } from "../interfaces/Ratios";
 import {
-  BooleanOptions,
   UpdateBooleanOptions,
   NumberOptions,
   UpdateNumberOptions,
@@ -23,7 +22,9 @@ class Model extends Observer {
   }
 
   public calculateNewRatios() {
-    const { fromCurrentValue, toCurrentValue, min, max } = this.data;
+    const {
+      fromCurrentValue, toCurrentValue, min, max,
+    } = this.data;
 
     this.ratios = {
       fromRatio: (fromCurrentValue - min) / (max - min),
@@ -86,9 +87,7 @@ class Model extends Observer {
     this.broadcast("updateNumericOptions", newData);
   }
 
-  public getData = (): GlobalOptions => {
-    return this.data;
-  };
+  public getData = (): GlobalOptions => this.data;
 
   public getRatios(): Ratios {
     return this.ratios;
@@ -121,6 +120,7 @@ class Model extends Observer {
 
     this.setCurrentValues({ toCurrentValue: newValue });
   };
+
   public setCurrentValues = (newData: Partial<GlobalOptions>) => {
     const { isRange } = this.data;
 
@@ -135,10 +135,9 @@ class Model extends Observer {
     const { min, step, max } = this.data;
     const lastValue = Math.floor((max - min) / step) * step + min;
 
-    newValue =
-      newValue <= lastValue + (max - lastValue) / 2
-        ? Math.round((newValue - min) / step) * step + min
-        : max;
+    newValue = newValue <= lastValue + (max - lastValue) / 2
+      ? Math.round((newValue - min) / step) * step + min
+      : max;
 
     if (newValue >= max) {
       newValue = max;
@@ -150,7 +149,9 @@ class Model extends Observer {
   }
 
   private returnSelectedValue(newData: Partial<GlobalOptions>) {
-    const { step, fromCurrentValue, toCurrentValue, min } = this.data;
+    const {
+      step, fromCurrentValue, toCurrentValue, min,
+    } = this.data;
     let currentValue: number;
 
     if (newData.fromCurrentValue) {
@@ -161,9 +162,9 @@ class Model extends Observer {
         ) {
           newData = {
             fromCurrentValue:
-              Math.floor((Math.abs(min) + Math.abs(toCurrentValue)) / step) *
-                step +
-              min,
+              Math.floor((Math.abs(min) + Math.abs(toCurrentValue)) / step)
+                * step
+                + min,
           };
         } else newData = { fromCurrentValue: toCurrentValue - step };
         return newData;
@@ -188,8 +189,11 @@ class Model extends Observer {
     this.calculateNewRatios();
     this.broadcast("changeData", this.data);
   }
+
   private changeIntervalDependence() {
-    const { toCurrentValue, fromCurrentValue, step, min } = this.data;
+    const {
+      toCurrentValue, fromCurrentValue, step, min,
+    } = this.data;
 
     if (fromCurrentValue >= toCurrentValue) {
       let value = toCurrentValue - step;
@@ -215,7 +219,7 @@ class Model extends Observer {
 
   private causeNecessaryDependence(
     optionName: NumberOptions,
-    optionState: number
+    optionState: number,
   ) {
     if (optionName === "step") {
       this.changeStepDependence(optionState);
@@ -279,10 +283,9 @@ class Model extends Observer {
       if ((current - min) % step) {
         const newCurrentValue = this.returnCorrectValue(current);
 
-        const newModelValue =
-          current === fromCurrentValue
-            ? { fromCurrentValue: newCurrentValue }
-            : { toCurrentValue: newCurrentValue };
+        const newModelValue = current === fromCurrentValue
+          ? { fromCurrentValue: newCurrentValue }
+          : { toCurrentValue: newCurrentValue };
 
         this.changeData(newModelValue);
       }
@@ -306,7 +309,9 @@ class Model extends Observer {
   }
 
   private checkSecondBoundaries(step: number) {
-    const { min, max, fromCurrentValue, toCurrentValue } = this.data;
+    const {
+      min, max, fromCurrentValue, toCurrentValue,
+    } = this.data;
 
     if (toCurrentValue >= max - step) {
       const newFirstValue = {

@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 /**
  * @jest-environment jsdom
  */
@@ -47,7 +48,7 @@ describe("Track view", () => {
       handleView.options.showTip = false;
       handleView.init();
       expect(
-        handleView.tip.classList.contains("range-slider__tip_hide")
+        handleView.tip.classList.contains("range-slider__tip_hide"),
       ).toBeTruthy();
     });
   });
@@ -57,13 +58,13 @@ describe("Track view", () => {
       handleView.init();
 
       expect(
-        handleView.thumb.classList.contains("range-slider__thumb")
+        handleView.thumb.classList.contains("range-slider__thumb"),
       ).toBeTruthy();
       expect(
-        handleView.tip.classList.contains("range-slider__tip_hide")
+        handleView.tip.classList.contains("range-slider__tip_hide"),
       ).toBeTruthy();
       expect(
-        handleView.handle.classList.contains("range-slider__handle")
+        handleView.handle.classList.contains("range-slider__handle"),
       ).toBeTruthy();
 
       expect(handleView.handle.children.length).toEqual(2);
@@ -73,7 +74,7 @@ describe("Track view", () => {
       const setPosition = jest.spyOn(HandleView.prototype, "setPosition");
       const createHandle = jest.spyOn(
         HandleView.prototype,
-        "createHandleElements"
+        "createHandleElements",
       );
 
       handleView.init();
@@ -98,7 +99,7 @@ describe("Track view", () => {
       handleView.setPosition();
 
       expect(handleView.tip.innerText).toEqual(
-        handleView.options.currentValue.toFixed().toString()
+        handleView.options.currentValue.toFixed().toString(),
       );
       expect(parseInt(handleView.thumb.style.left, 0)).toBeGreaterThan(0);
       expect(parseInt(handleView.thumb.style.top, 0)).toBeNaN();
@@ -108,7 +109,7 @@ describe("Track view", () => {
       handleView.setPosition();
 
       expect(handleView.tip.innerText).toEqual(
-        handleView.options.currentValue.toFixed().toString()
+        handleView.options.currentValue.toFixed().toString(),
       );
       expect(parseInt(handleView.thumb.style.top, 0)).toBeGreaterThan(0);
       expect(parseInt(handleView.thumb.style.left, 0)).toEqual(250);

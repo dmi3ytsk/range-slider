@@ -48,7 +48,7 @@ class View extends Observer {
     this.slider.appendChild(this.scale.getScale());
 
     this.updateSliderSize();
-    if(this.options.showScale){
+    if (this.options.showScale) {
       this.scale.init();
     }
 
@@ -110,7 +110,7 @@ class View extends Observer {
       showBar,
       showTip,
       ratios,
-      step
+      step,
     };
   }
 
@@ -120,25 +120,25 @@ class View extends Observer {
   };
 
   public updateOrientation = () => {
-   if (this.options.isVertical) {
-     this.slider.classList.add("range-slider_vertical");
-   } else {
-     this.slider.classList.remove("range-slider_vertical");
-   }
+    if (this.options.isVertical) {
+      this.slider.classList.add("range-slider_vertical");
+    } else {
+      this.slider.classList.remove("range-slider_vertical");
+    }
 
-   this.updateSliderSize();
- };
+    this.updateSliderSize();
+  };
 
- public updateRatios = (newRatios: Ratios) => {
-   this.ratios = newRatios;
- };
+  public updateRatios = (newRatios: Ratios) => {
+    this.ratios = newRatios;
+  };
 
- public updateOptions = (options: GlobalOptions) => {
-   this.options = options;
-   this.setTrackOptions();
-   this.track.updateOptions(this.trackOptions);
-   this.scale.updateOptions(this.options);
- };
+  public updateOptions = (options: GlobalOptions) => {
+    this.options = options;
+    this.setTrackOptions();
+    this.track.updateOptions(this.trackOptions);
+    this.scale.updateOptions(this.options);
+  };
 
   public reInitSlider = () => {
     this.track.initTrackElements();
@@ -162,18 +162,18 @@ class View extends Observer {
   };
 
   private subscribeToEvents() {
-   this.track.subscribe("dragHandle", this.notifyHandleDrag);
-   this.scale.subscribe("scaleClick", this.notifyHandleDrag);
- }
+    this.track.subscribe("dragHandle", this.notifyHandleDrag);
+    this.scale.subscribe("scaleClick", this.notifyHandleDrag);
+  }
 
- private notifyHandleDrag = (valueSettings: ValueOptions) => {
-   const { handleNumber, ratio } = valueSettings;
-   if (handleNumber === 1) {
-     this.broadcast("handleFromHandleDrag", ratio);
-   } else {
-     this.broadcast("handleToHandleDrag", ratio);
-   }
- };
+  private notifyHandleDrag = (valueSettings: ValueOptions) => {
+    const { handleNumber, ratio } = valueSettings;
+    if (handleNumber === 1) {
+      this.broadcast("handleFromHandleDrag", ratio);
+    } else {
+      this.broadcast("handleToHandleDrag", ratio);
+    }
+  };
 }
 
 export default View;

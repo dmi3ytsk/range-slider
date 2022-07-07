@@ -1,8 +1,8 @@
-import JQuery from "jquery";
+import jquery from "jquery";
 
 import { GlobalOptions } from "../../app/interfaces/GlobalOptions";
 
-(<any>window).$ = (<any>window).jQuery = JQuery;
+(<any>window).$ = (<any>window).jQuery = jquery;
 
 class SliderConfig {
   options: GlobalOptions;

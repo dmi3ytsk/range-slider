@@ -103,24 +103,23 @@ class TrackView extends Observer {
     } = options;
 
     this.handles.forEach((handle, index) => {
-      const newOptions =
-        index === 0
-          ? {
-              isVertical,
-              isRange,
-              showTip,
-              currentValue: fromCurrentValue,
-              ratio: fromRatio,
-              step: step,
-            }
-          : {
-              isVertical,
-              isRange,
-              showTip,
-              currentValue: toCurrentValue,
-              ratio: toRatio,
-              step: step,
-            };
+      const newOptions = index === 0
+        ? {
+          isVertical,
+          isRange,
+          showTip,
+          currentValue: fromCurrentValue,
+          ratio: fromRatio,
+          step,
+        }
+        : {
+          isVertical,
+          isRange,
+          showTip,
+          currentValue: toCurrentValue,
+          ratio: toRatio,
+          step,
+        };
       handle.updateSliderSize(this.sliderSize);
       handle.updateOptions(newOptions);
     });
@@ -149,13 +148,13 @@ class TrackView extends Observer {
               step
                 .toString()
                 .split("." || ",")
-                .pop().length
+                .pop().length,
             );
             const toCorrectValue: string = toCurrentValue.toFixed(
               step
                 .toString()
                 .split("." || ",")
-                .pop().length
+                .pop().length,
             );
             handle.tip.innerHTML = `from ${fromCorrectValue} to ${toCorrectValue}`;
           } else {
@@ -171,31 +170,29 @@ class TrackView extends Observer {
               step
                 .toString()
                 .split("." || ",")
-                .pop().length
+                .pop().length,
             );
             const toCorrectValue: string = toCurrentValue.toFixed(
               step
                 .toString()
                 .split("." || ",")
-                .pop().length
+                .pop().length,
             );
             handle.tip.innerHTML = `${fromCorrectValue} ${toCorrectValue}`;
           } else {
             handle.tip.innerHTML = `${fromCurrentValue} ${toCurrentValue}`;
             handle.tip.style.height = "inherit";
-            handle.tip.style.marginTop =
-              handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
+            handle.tip.style.marginTop = handle.tip.offsetHeight
+              > tipSize ? "-5px" : "0px";
           }
         } else {
           handle.tip.style.opacity = "0";
         }
+      } else if (index === 0 && handle.options.isVertical) {
+        handle.tip.style.height = "1.5rem";
+        handle.tip.style.marginTop = "0px";
       } else {
-        if (index === 0 && handle.options.isVertical) {
-          handle.tip.style.height = "1.5rem";
-          handle.tip.style.marginTop = "0px";
-        } else {
-          handle.tip.style.opacity = "1";
-        }
+        handle.tip.style.opacity = "1";
       }
     });
 

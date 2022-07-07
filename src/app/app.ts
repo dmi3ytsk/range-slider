@@ -1,11 +1,10 @@
-import "../app/app.scss";
 import Model from "../app/Model/Model";
 import View from "./MainView/View/View";
 import Controller from "../app/Controller/Controller";
 import { GlobalOptions } from "../app/interfaces/GlobalOptions";
 import { ControllerOptionsMethods } from "../app/interfaces/ControllerOptionsMethods";
-import jquery from "jquery";
-(<any>window).$ = (<any>window).jQuery = jquery;
+
+import "./app.scss";
 
 declare global {
   interface JQuery {
@@ -26,10 +25,9 @@ declare global {
       let model: Model;
       const dataOptionsAttributes = $(this).data();
       const { defaultAttributes } = Model;
-      const newOptions =
-        typeof options === "object"
-          ? { ...options, ...dataOptionsAttributes }
-          : { ...defaultAttributes, ...dataOptionsAttributes };
+      const newOptions = typeof options === "object"
+        ? { ...options, ...dataOptionsAttributes }
+        : { ...defaultAttributes, ...dataOptionsAttributes };
 
       if (Object.keys(newOptions).length > 0 || options) {
         model = new Model(newOptions);
@@ -45,18 +43,12 @@ declare global {
       return this;
     };
 
-    const executeControllerMethod = (methodName: ControllerOptionsMethods) => {
-      return $(this)
-        .data("controller")
-        [methodName](...args);
-    };
+    const executeControllerMethod = (methodName: ControllerOptionsMethods) => $(this).data("controller")[methodName](...args);
 
     if (typeof options === "string") {
       const methodName = options;
 
-      return $(this).map(() => {
-        return executeControllerMethod(methodName);
-      });
+      return $(this).map(() => executeControllerMethod(methodName));
     }
 
     return init();
