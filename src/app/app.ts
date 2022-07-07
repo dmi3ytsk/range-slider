@@ -9,7 +9,7 @@ import "./app.scss";
 declare global {
   interface JQuery {
     slider: (
-      sliderContainer?: HTMLElement,
+      sliderContainer: HTMLElement,
       options?: GlobalOptions | ControllerOptionsMethods,
       rest?:
         | Partial<GlobalOptions>

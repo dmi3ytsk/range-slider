@@ -3,11 +3,11 @@ import createElement from "../utils/createElement";
 import { GlobalOptions } from "../../interfaces/GlobalOptions";
 
 class ScaleView extends Observer {
-  scale: HTMLElement;
+  scale!: HTMLElement;
 
   scaleElements: HTMLElement[];
 
-  sliderSize: number;
+  sliderSize!: number;
 
   constructor(public options: GlobalOptions) {
     super();

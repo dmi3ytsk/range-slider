@@ -3,7 +3,7 @@ class Observer {
     this.listeners = listeners;
   }
 
-  public subscribe(event: string, callback) {
+  public subscribe(event: string, callback: {}) {
     this.listeners[event] = this.listeners[event] || [];
     this.listeners[event].push(callback);
   }

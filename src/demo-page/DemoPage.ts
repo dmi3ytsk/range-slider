@@ -8,14 +8,14 @@ import "../app/app";
 (<any>window).$ = (<any>window).jQuery = JQuery;
 
 class DemoPage {
-  $slider: JQuery<Element>;
+  $slider!: JQuery<Element>;
 
-  sliderConfig: SliderConfig;
+  sliderConfig!: SliderConfig;
 
   constructor(
     public root: HTMLElement,
     public sliderContainer: HTMLElement,
-    options?: GlobalOptions,
+    options: GlobalOptions,
   ) {
     this.init(options);
     this.root = root;
@@ -23,14 +23,17 @@ class DemoPage {
   }
 
   public init(options: GlobalOptions) {
-    const sliderConfig: HTMLFormElement = this.root.querySelector(
-      ".js-ez-range-slider-config",
-    );
-
     // eslint-disable-next-line no-undef
     this.$slider = $(this.root).slider(this.sliderContainer, options);
-    if (sliderConfig) {
-      this.sliderConfig = new SliderConfig(this.$slider, sliderConfig);
+
+    const isConfigExist = !!this.root.querySelector(".js-ez-range-slider-config");
+    if (isConfigExist) {
+      const sliderConfig: HTMLFormElement | null = this.root.querySelector(
+        ".js-ez-range-slider-config",
+      );
+      if (sliderConfig) {
+        this.sliderConfig = new SliderConfig(this.$slider, sliderConfig);
+      }
     }
   }
 }

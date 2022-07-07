@@ -4,13 +4,13 @@ import createElement from "../utils/createElement";
 import { TrackOptions } from "../../interfaces/TrackOptions";
 
 class TrackView extends Observer {
-  track: HTMLElement;
+  track!: HTMLElement;
 
-  bar: HTMLElement;
+  bar!: HTMLElement;
 
-  sliderSize: number;
+  sliderSize!: number;
 
-  handles: HandleView[];
+  handles!: HandleView[];
 
   constructor(public options: TrackOptions) {
     super();

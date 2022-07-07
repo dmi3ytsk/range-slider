@@ -11,10 +11,10 @@ describe("Test Observer", () => {
   });
 
   describe("Test subscribe method", () => {
-    const realBoolean = (data) => data.state;
+    const realBoolean = (data: any) => data.state;
     observer.subscribe("ReturnBoolean", realBoolean);
 
-    const reverseBoolean = (data) => data.state;
+    const reverseBoolean = (data: any) => data.state;
     observer.subscribe("ReturnBoolean", reverseBoolean);
 
     test("Callback work correctly", () => {
@@ -30,13 +30,13 @@ describe("Test Observer", () => {
       let falseBoolean = false;
       let trueBoolean = true;
 
-      const realBoolean = (data) => {
+      const realBoolean = (data: any) => {
         falseBoolean = data.state;
       };
 
       observer.subscribe("ReturnBoolean", realBoolean);
 
-      const reverseBoolean = (data) => {
+      const reverseBoolean = (data: any) => {
         trueBoolean = data.state;
       };
       observer.subscribe("ReturnBoolean", reverseBoolean);

@@ -11,15 +11,15 @@ import { ValueOptions } from "../../interfaces/ValueOptions";
 class View extends Observer {
   options: GlobalOptions;
 
-  track: TrackView;
+  track!: TrackView;
 
-  trackOptions: TrackOptions;
+  trackOptions!: TrackOptions;
 
-  scale: ScaleView;
+  scale!: ScaleView;
 
-  slider: HTMLElement;
+  slider!: HTMLElement;
 
-  sliderSize: number;
+  sliderSize!: number;
 
   ratios: Ratios;
 
