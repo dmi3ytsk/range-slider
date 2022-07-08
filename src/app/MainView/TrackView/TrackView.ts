@@ -2,6 +2,7 @@ import Observer from "../../Observer/Observer";
 import HandleView from "../HandleView/HandleView";
 import createElement from "../utils/createElement";
 import { TrackOptions } from "../../interfaces/TrackOptions";
+import { GlobalOptions } from "../../interfaces/GlobalOptions";
 
 class TrackView extends Observer {
   track!: HTMLElement;
@@ -94,6 +95,34 @@ class TrackView extends Observer {
   public setElementsPosition(options: TrackOptions) {
     const {
       isVertical,
+      isRange,
+      ratios: { fromRatio, toRatio },
+    } = options;
+
+    this.setOptionsForHandle(options);
+    this.setTipContent(options);
+
+    if (isVertical) {
+      this.bar.style.transform = `scaleY(${fromRatio})`;
+    } else {
+      this.bar.style.transform = `scaleX(${fromRatio})`;
+    }
+    if (isRange) {
+      this.bar.style.transform = `translateX(${
+        fromRatio * this.sliderSize
+      }px) scaleX(${toRatio - fromRatio})`;
+
+      if (isVertical) {
+        this.bar.style.transform = `translateY(${
+          fromRatio * -this.sliderSize
+        }px) scaleY(${toRatio - fromRatio})`;
+      }
+    }
+  }
+
+  private setOptionsForHandle(options: TrackOptions) {
+    const {
+      isVertical,
       showTip,
       fromCurrentValue,
       toCurrentValue,
@@ -101,7 +130,6 @@ class TrackView extends Observer {
       ratios: { fromRatio, toRatio },
       step,
     } = options;
-
     this.handles.forEach((handle, index) => {
       const newOptions = index === 0
         ? {
@@ -123,67 +151,48 @@ class TrackView extends Observer {
       handle.updateSliderSize(this.sliderSize);
       handle.updateOptions(newOptions);
     });
+  }
+
+  private setTipContent(options:TrackOptions) {
+    const { fromCurrentValue, toCurrentValue, step } = options;
     let fromOffset: number;
     let toOffset: number;
     let tipSize: number;
-    this.handles.forEach((handle, index) => {
-      if (index === 0) {
-        fromOffset = handle.options.isVertical
-          ? handle.tip.offsetTop
-          : handle.tip.offsetLeft;
-      } else {
-        toOffset = handle.options.isVertical
-          ? handle.tip.offsetTop
-          : handle.tip.offsetLeft;
-        tipSize = handle.options.isVertical
-          ? handle.tip.offsetHeight
-          : handle.tip.offsetWidth;
-      }
-    });
+
     this.handles.forEach((handle, index) => {
       if (toOffset - fromOffset < tipSize + 3 && !handle.options.isVertical) {
         if (index === 0) {
+          fromOffset = handle.options.isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
           if (!Number.isInteger(Number(step))) {
             const fromCorrectValue: string = fromCurrentValue.toFixed(
-              step
-                .toString()
-                .split("." || ",")
-                .pop()?.length,
+              step.toString().split("." || ",").pop()?.length,
             );
             const toCorrectValue: string = toCurrentValue.toFixed(
-              step
-                .toString()
-                .split("." || ",")
-                .pop()?.length,
+              step.toString().split("." || ",").pop()?.length,
             );
             handle.tip.innerHTML = `from ${fromCorrectValue} to ${toCorrectValue}`;
           } else {
             handle.tip.innerHTML = `from ${fromCurrentValue} to ${toCurrentValue}`;
           }
         } else {
+          toOffset = handle.options.isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
+          tipSize = handle.options.isVertical ? handle.tip.offsetHeight : handle.tip.offsetWidth;
           handle.tip.style.opacity = "0";
         }
       } else if (fromOffset - toOffset < tipSize && handle.options.isVertical) {
         if (index === 0) {
           if (!Number.isInteger(Number(step))) {
             const fromCorrectValue: string = fromCurrentValue.toFixed(
-              step
-                .toString()
-                .split("." || ",")
-                .pop()?.length,
+              step.toString().split("." || ",").pop()?.length,
             );
             const toCorrectValue: string = toCurrentValue.toFixed(
-              step
-                .toString()
-                .split("." || ",")
-                .pop()?.length,
+              step.toString().split("." || ",").pop()?.length,
             );
             handle.tip.innerHTML = `${fromCorrectValue} ${toCorrectValue}`;
           } else {
             handle.tip.innerHTML = `${fromCurrentValue} ${toCurrentValue}`;
             handle.tip.style.height = "inherit";
-            handle.tip.style.marginTop = handle.tip.offsetHeight
-              > tipSize ? "-5px" : "0px";
+            handle.tip.style.marginTop = handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
           }
         } else {
           handle.tip.style.opacity = "0";
@@ -195,24 +204,6 @@ class TrackView extends Observer {
         handle.tip.style.opacity = "1";
       }
     });
-
-    if (isVertical) {
-      this.bar.style.transform = `scaleY(${fromRatio})`;
-    } else {
-      this.bar.style.transform = `scaleX(${fromRatio})`;
-    }
-
-    if (isRange) {
-      this.bar.style.transform = `translateX(${
-        fromRatio * this.sliderSize
-      }px) scaleX(${toRatio - fromRatio})`;
-
-      if (isVertical) {
-        this.bar.style.transform = `translateY(${
-          fromRatio * -this.sliderSize
-        }px) scaleY(${toRatio - fromRatio})`;
-      }
-    }
   }
 
   public getTrack() {
