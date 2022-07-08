@@ -114,6 +114,7 @@ class TrackView extends Observer {
         tipSize = handle.options.isVertical ? handle.tip.offsetHeight : handle.tip.offsetWidth;
       }
     });
+
     this.handles.forEach((handle, index) => {
       if (toOffset - fromOffset < tipSize + 3 && !handle.options.isVertical) {
         if (index === 0) {
