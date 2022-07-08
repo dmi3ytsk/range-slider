@@ -11,7 +11,7 @@ import {
 class Model extends Observer {
   data: GlobalOptions;
 
-  ratios: Ratios;
+  ratios!: Ratios;
 
   static defaultAttributes = defaultAttributes;
 
@@ -169,7 +169,7 @@ class Model extends Observer {
         } else newData = { fromCurrentValue: toCurrentValue - step };
         return newData;
       }
-    } else {
+    } else if (newData.toCurrentValue) {
       currentValue = newData.toCurrentValue;
       if (currentValue - step <= fromCurrentValue) {
         newData = { toCurrentValue: fromCurrentValue + step };
@@ -180,12 +180,11 @@ class Model extends Observer {
     return newData;
   }
 
-  public changeData(newData: Partial<GlobalOptions>) {
+  public changeData <T>(newData: T) : void {
     this.data = {
       ...this.data,
       ...newData,
     };
-
     this.calculateNewRatios();
     this.broadcast("changeData", this.data);
   }

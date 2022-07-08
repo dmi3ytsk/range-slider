@@ -103,7 +103,7 @@ class ScaleView extends Observer {
           step
             .toString()
             .split("." || ",")
-            .pop().length,
+            .pop()?.length,
         );
       } else {
         li.innerHTML = Math.round(currentValue).toString();
@@ -166,7 +166,7 @@ class ScaleView extends Observer {
           step
             .toString()
             .split("." || ",")
-            .pop().length,
+            .pop()?.length,
         );
       } else {
         li.innerHTML = Math.round(currentValue).toString();

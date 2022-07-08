@@ -148,13 +148,13 @@ class TrackView extends Observer {
               step
                 .toString()
                 .split("." || ",")
-                .pop().length,
+                .pop()?.length,
             );
             const toCorrectValue: string = toCurrentValue.toFixed(
               step
                 .toString()
                 .split("." || ",")
-                .pop().length,
+                .pop()?.length,
             );
             handle.tip.innerHTML = `from ${fromCorrectValue} to ${toCorrectValue}`;
           } else {
@@ -170,13 +170,13 @@ class TrackView extends Observer {
               step
                 .toString()
                 .split("." || ",")
-                .pop().length,
+                .pop()?.length,
             );
             const toCorrectValue: string = toCurrentValue.toFixed(
               step
                 .toString()
                 .split("." || ",")
-                .pop().length,
+                .pop()?.length,
             );
             handle.tip.innerHTML = `${fromCorrectValue} ${toCorrectValue}`;
           } else {

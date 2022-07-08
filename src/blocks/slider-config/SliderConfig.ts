@@ -5,9 +5,9 @@ import { GlobalOptions } from "../../app/interfaces/GlobalOptions";
 (<any>window).$ = (<any>window).jQuery = jquery;
 
 class SliderConfig {
-  options: GlobalOptions;
+  options!: GlobalOptions;
 
-  sliderContainer: HTMLElement;
+  sliderContainer!: HTMLElement;
 
   constructor(public $slider: JQuery<Element>, public root: HTMLFormElement) {
     this.init();
@@ -45,7 +45,7 @@ class SliderConfig {
               data.step
                 .toString()
                 .split("." || ",")
-                .pop().length,
+                .pop()?.length,
             );
           } else {
             input.value = newValue.toString();
@@ -59,7 +59,7 @@ class SliderConfig {
               data.step
                 .toString()
                 .split("." || ",")
-                .pop().length,
+                .pop()?.length,
             );
           } else {
             input.value = newValue.toString();
@@ -132,7 +132,7 @@ class SliderConfig {
           step
             .toString()
             .split("." || ",")
-            .pop().length,
+            .pop()?.length,
         );
       }
     }
@@ -149,7 +149,7 @@ class SliderConfig {
           step
             .toString()
             .split("." || ",")
-            .pop().length,
+            .pop()?.length,
         );
       }
     }
