@@ -125,7 +125,7 @@ class SliderConfig {
     const { min, step } = this.options;
 
     if (target.name === "max") {
-      if (Number(target.value) < Number(min)) {
+      if (Number(target.value) <= Number(min)) {
         target.value = (Number(min) + step).toString();
       } else if (!Number.isInteger(Number(step))) {
         target.value = Number(target.value).toFixed(
@@ -142,7 +142,7 @@ class SliderConfig {
     const { max, step } = this.options;
 
     if (target.name === "min") {
-      if (Number(max) < Number(target.value)) {
+      if (Number(max) <= Number(target.value)) {
         target.value = (Number(max) - step).toString();
       } else if (!Number.isInteger(Number(step))) {
         target.value = Number(target.value).toFixed(
