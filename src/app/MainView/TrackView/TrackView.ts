@@ -95,18 +95,74 @@ class TrackView extends Observer {
   public setElementsPosition(options: TrackOptions) {
     const {
       isVertical,
+      fromCurrentValue,
+      toCurrentValue,
       isRange,
       ratios: { fromRatio, toRatio },
+      step,
     } = options;
 
     this.setOptionsForHandle(options);
-    this.setTipContent(options);
+    let fromOffset: number;
+    let toOffset: number;
+    let tipSize: number;
+    this.handles.forEach((handle, index) => {
+      if (index === 0) {
+        fromOffset = handle.options.isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
+      } else {
+        toOffset = handle.options.isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
+        tipSize = handle.options.isVertical ? handle.tip.offsetHeight : handle.tip.offsetWidth;
+      }
+    });
+    this.handles.forEach((handle, index) => {
+      if (toOffset - fromOffset < tipSize + 3 && !handle.options.isVertical) {
+        if (index === 0) {
+          if (!Number.isInteger(Number(step))) {
+            const fromCorrectValue: string = fromCurrentValue.toFixed(
+              step.toString().split("." || ",").pop()?.length,
+            );
+            const toCorrectValue: string = toCurrentValue.toFixed(
+              step.toString().split("." || ",").pop()?.length,
+            );
+            handle.tip.innerHTML = `from ${fromCorrectValue} to ${toCorrectValue}`;
+          } else {
+            handle.tip.innerHTML = `from ${fromCurrentValue} to ${toCurrentValue}`;
+          }
+        } else {
+          handle.tip.style.opacity = "0";
+        }
+      } else if (fromOffset - toOffset < tipSize && handle.options.isVertical) {
+        if (index === 0) {
+          if (!Number.isInteger(Number(step))) {
+            const fromCorrectValue: string = fromCurrentValue.toFixed(
+              step.toString().split("." || ",").pop()?.length,
+            );
+            const toCorrectValue: string = toCurrentValue.toFixed(
+              step.toString().split("." || ",").pop()?.length,
+            );
+            handle.tip.innerHTML = `${fromCorrectValue} ${toCorrectValue}`;
+          } else {
+            handle.tip.innerHTML = `${fromCurrentValue} ${toCurrentValue}`;
+            handle.tip.style.height = "inherit";
+            handle.tip.style.marginTop = handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
+          }
+        } else {
+          handle.tip.style.opacity = "0";
+        }
+      } else if (index === 0 && handle.options.isVertical) {
+        handle.tip.style.height = "1.5rem";
+        handle.tip.style.marginTop = "0px";
+      } else {
+        handle.tip.style.opacity = "1";
+      }
+    });
 
     if (isVertical) {
       this.bar.style.transform = `scaleY(${fromRatio})`;
     } else {
       this.bar.style.transform = `scaleX(${fromRatio})`;
     }
+
     if (isRange) {
       this.bar.style.transform = `translateX(${
         fromRatio * this.sliderSize
@@ -150,59 +206,6 @@ class TrackView extends Observer {
         };
       handle.updateSliderSize(this.sliderSize);
       handle.updateOptions(newOptions);
-    });
-  }
-
-  private setTipContent(options:TrackOptions) {
-    const { fromCurrentValue, toCurrentValue, step } = options;
-    let fromOffset: number;
-    let toOffset: number;
-    let tipSize: number;
-
-    this.handles.forEach((handle, index) => {
-      if (toOffset - fromOffset < tipSize + 3 && !handle.options.isVertical) {
-        if (index === 0) {
-          fromOffset = handle.options.isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
-          if (!Number.isInteger(Number(step))) {
-            const fromCorrectValue: string = fromCurrentValue.toFixed(
-              step.toString().split("." || ",").pop()?.length,
-            );
-            const toCorrectValue: string = toCurrentValue.toFixed(
-              step.toString().split("." || ",").pop()?.length,
-            );
-            handle.tip.innerHTML = `from ${fromCorrectValue} to ${toCorrectValue}`;
-          } else {
-            handle.tip.innerHTML = `from ${fromCurrentValue} to ${toCurrentValue}`;
-          }
-        } else {
-          toOffset = handle.options.isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
-          tipSize = handle.options.isVertical ? handle.tip.offsetHeight : handle.tip.offsetWidth;
-          handle.tip.style.opacity = "0";
-        }
-      } else if (fromOffset - toOffset < tipSize && handle.options.isVertical) {
-        if (index === 0) {
-          if (!Number.isInteger(Number(step))) {
-            const fromCorrectValue: string = fromCurrentValue.toFixed(
-              step.toString().split("." || ",").pop()?.length,
-            );
-            const toCorrectValue: string = toCurrentValue.toFixed(
-              step.toString().split("." || ",").pop()?.length,
-            );
-            handle.tip.innerHTML = `${fromCorrectValue} ${toCorrectValue}`;
-          } else {
-            handle.tip.innerHTML = `${fromCurrentValue} ${toCurrentValue}`;
-            handle.tip.style.height = "inherit";
-            handle.tip.style.marginTop = handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
-          }
-        } else {
-          handle.tip.style.opacity = "0";
-        }
-      } else if (index === 0 && handle.options.isVertical) {
-        handle.tip.style.height = "1.5rem";
-        handle.tip.style.marginTop = "0px";
-      } else {
-        handle.tip.style.opacity = "1";
-      }
     });
   }
 
