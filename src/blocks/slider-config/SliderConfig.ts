@@ -159,11 +159,16 @@ class SliderConfig {
     const { max, min } = this.options;
 
     if (target.name === "step") {
+      target.value = Math.sign(Number(target.value)) > 0
+        ? target.value
+        : Math.abs(Number(target.value)).toString();
+
       if (Number(target.value) > Number(max) - Number(min)) {
         target.value = (Number(max) - Number(min)).toString();
       } else if (!Number.isInteger(Number(target.value))) {
-        // eslint-disable-next-line no-self-assign
-        target.value = target.value;
+        target.value = Number(target.value).toString();
+      } else if (Number(target.value) === 0) {
+        target.value = Number(1).toString();
       }
     }
   }
