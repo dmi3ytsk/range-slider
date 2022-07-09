@@ -117,6 +117,8 @@ class Model extends Observer {
     const { max, min } = this.data;
     const possibleCurrentValue = ToRatio * (max - min) + min;
     const newValue = this.returnCorrectValue(possibleCurrentValue);
+    // console.log(possibleCurrentValue, " possibleCurrentValue")
+    // console.log(newValue, "correct value")
 
     this.setCurrentValues({ toCurrentValue: newValue });
   };
@@ -138,7 +140,6 @@ class Model extends Observer {
     newValue = newValue <= lastValue + (max - lastValue) / 2
       ? Math.round((newValue - min) / step) * step + min
       : max;
-
     if (newValue >= max) {
       newValue = max;
     } else if (newValue <= min) {
@@ -150,16 +151,14 @@ class Model extends Observer {
 
   private returnSelectedValue(newData: Partial<GlobalOptions>) {
     const {
-      step, fromCurrentValue, toCurrentValue, min,
+      step, fromCurrentValue, toCurrentValue, min, max,
     } = this.data;
     let currentValue: number;
 
     if (newData.fromCurrentValue) {
       currentValue = newData.fromCurrentValue;
       if (currentValue + step >= toCurrentValue) {
-        if (
-          !Number.isInteger((Math.abs(min) + Math.abs(toCurrentValue)) / step)
-        ) {
+        if (!Number.isInteger((Math.abs(min) + Math.abs(toCurrentValue)) / step)) {
           newData = {
             fromCurrentValue:
               Math.floor((Math.abs(min) + Math.abs(toCurrentValue)) / step)
@@ -172,9 +171,14 @@ class Model extends Observer {
     } else if (newData.toCurrentValue) {
       currentValue = newData.toCurrentValue;
       if (currentValue - step <= fromCurrentValue) {
-        newData = { toCurrentValue: fromCurrentValue + step };
-        return newData;
+        const correctValue = (fromCurrentValue + step) > max
+          ? max
+          : fromCurrentValue + step;
+        newData = { toCurrentValue: correctValue };
+      } else if (currentValue === max) {
+        newData = { toCurrentValue: currentValue };
       }
+      return newData;
     }
 
     return newData;
