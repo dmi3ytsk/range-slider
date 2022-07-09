@@ -2,7 +2,6 @@ import Observer from "../../Observer/Observer";
 import HandleView from "../HandleView/HandleView";
 import createElement from "../utils/createElement";
 import { TrackOptions } from "../../interfaces/TrackOptions";
-import { GlobalOptions } from "../../interfaces/GlobalOptions";
 
 class TrackView extends Observer {
   track!: HTMLElement;
@@ -94,10 +93,8 @@ class TrackView extends Observer {
 
   public setElementsPosition(options: TrackOptions) {
     const {
-      isVertical,
       fromCurrentValue,
       toCurrentValue,
-      isRange,
       ratios: { fromRatio, toRatio },
       step,
     } = options;
@@ -158,23 +155,7 @@ class TrackView extends Observer {
       }
     });
 
-    if (isVertical) {
-      this.bar.style.transform = `scaleY(${fromRatio})`;
-    } else {
-      this.bar.style.transform = `scaleX(${fromRatio})`;
-    }
-
-    if (isRange) {
-      this.bar.style.transform = `translateX(${
-        fromRatio * this.sliderSize
-      }px) scaleX(${toRatio - fromRatio})`;
-
-      if (isVertical) {
-        this.bar.style.transform = `translateY(${
-          fromRatio * -this.sliderSize
-        }px) scaleY(${toRatio - fromRatio})`;
-      }
-    }
+    this.setBarDesign(options, fromRatio, toRatio);
   }
 
   private setOptionsForHandle(options: TrackOptions) {
@@ -208,6 +189,27 @@ class TrackView extends Observer {
       handle.updateSliderSize(this.sliderSize);
       handle.updateOptions(newOptions);
     });
+  }
+
+  private setBarDesign(options: TrackOptions, fromRatio:number, toRatio:number) {
+    const { isVertical, isRange } = options;
+    if (isVertical) {
+      this.bar.style.transform = `scaleY(${fromRatio})`;
+    } else {
+      this.bar.style.transform = `scaleX(${fromRatio})`;
+    }
+
+    if (isRange) {
+      this.bar.style.transform = `translateX(${
+        fromRatio * this.sliderSize
+      }px) scaleX(${toRatio - fromRatio})`;
+
+      if (isVertical) {
+        this.bar.style.transform = `translateY(${
+          fromRatio * -this.sliderSize
+        }px) scaleY(${toRatio - fromRatio})`;
+      }
+    }
   }
 
   public getTrack() {
