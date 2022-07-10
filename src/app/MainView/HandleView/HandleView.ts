@@ -3,15 +3,15 @@ import createElement from "../utils/createElement";
 import { HandleOptions } from "../../interfaces/HandleOptions";
 
 class HandleView extends Observer {
-  handle: HTMLElement;
+  handle!: HTMLElement;
 
-  tip: HTMLElement;
+  tip!: HTMLElement;
 
-  thumb: HTMLElement;
+  thumb!: HTMLElement;
 
-  sliderSize: number;
+  sliderSize!: number;
 
-  positionOptions: {
+  positionOptions!: {
     clientX: number;
     clientY: number;
     offsetLeft: number;
@@ -42,7 +42,7 @@ class HandleView extends Observer {
     this.createHandleElements();
     this.setPosition();
     this.setDragListeners();
-    // this.setTouchDragListeners();
+    this.setTouchDragListeners();
   }
 
   public createHandleElements() {
@@ -85,7 +85,7 @@ class HandleView extends Observer {
         this.options.step
           .toString()
           .split("." || ",")
-          .pop().length,
+          .pop()?.length,
       );
     } else {
       this.tip.innerHTML = currentValue.toFixed().toString();
@@ -135,24 +135,50 @@ class HandleView extends Observer {
       window.addEventListener("mouseup", this.handleWindowMouseUp);
     }
   };
-//-touch events in progress
-  // private handleWindowTouchMove = (event: TouchEvent) => {
-  //   const { isVertical } = this.options;
-  //   const { clientX, clientY, offsetLeft, offsetTop, offsetHeight } =
-  //     this.positionOptions;
 
-  // };
+  private handleWindowTouchMove = (event: TouchEvent) => {
+    const { isVertical } = this.options;
+    const {
+      clientX, clientY, offsetLeft, offsetTop, offsetHeight,
+    } = this.positionOptions;
 
-  // private handleWindowTouchEnd = () => {
-  // };
+    const position = isVertical
+      ? offsetTop + event.touches[0].clientY - clientY + offsetHeight / 2
+      : offsetLeft + event.touches[0].clientX - clientX;
 
-  // private setTouchDragListeners() {
-  //   this.handle.addEventListener("touchstart", this.handleRunnerTouchStart)
-  // }
+    const value = isVertical
+      ? (this.sliderSize - position) / this.sliderSize
+      : position / this.sliderSize;
+    this.broadcast("dragHandle", value);
+  };
 
-  // private handleRunnerTouchStart = (event: TouchEvent) => {
-  // };
+  private handleWindowTouchEnd = () => {
+    document.removeEventListener("touchmove", this.handleWindowTouchMove);
+  };
 
+  private setTouchDragListeners() {
+    this.handle.addEventListener("touchstart", this.handleRunnerTouchStart, { passive: false });
+  }
+
+  private handleRunnerTouchStart = (event: TouchEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const { target } = event;
+    if (target && target instanceof HTMLElement) {
+      const { clientY, clientX } = event.touches[0];
+      const { offsetLeft, offsetTop, offsetHeight } = target;
+      this.positionOptions = {
+        clientY,
+        clientX,
+        offsetLeft,
+        offsetTop,
+        offsetHeight,
+      };
+
+      document.addEventListener("touchmove", this.handleWindowTouchMove, { passive: false });
+      document.addEventListener("touchend", this.handleWindowTouchEnd, { once: true });
+    }
+  };
 }
 
 export default HandleView;
