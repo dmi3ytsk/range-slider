@@ -154,19 +154,17 @@ class Model extends Observer {
 
     if (newData.fromCurrentValue) {
       currentValue = newData.fromCurrentValue;
-      if (currentValue + step >= toCurrentValue) {
-        if (!Number.isInteger((Math.abs(min) + Math.abs(toCurrentValue)) / step)) {
+      if (currentValue + step >= toCurrentValue && currentValue !== min) {
+        if (!Number.isInteger((min + toCurrentValue) / step) && toCurrentValue === max) {
           newData = {
             fromCurrentValue:
               Math.floor((Math.abs(min) + Math.abs(toCurrentValue)) / step)
                 * step
                 + min,
           };
-        } else if (currentValue === min) {
-          newData = { fromCurrentValue: min };
-          return newData;
         } else newData = { fromCurrentValue: toCurrentValue - step };
-        return newData;
+      } else if (currentValue === min) {
+        newData = { fromCurrentValue: currentValue };
       }
     } else if (newData.toCurrentValue) {
       currentValue = newData.toCurrentValue;
