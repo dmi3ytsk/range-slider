@@ -117,9 +117,6 @@ class Model extends Observer {
     const { max, min } = this.data;
     const possibleCurrentValue = ToRatio * (max - min) + min;
     const newValue = this.returnCorrectValue(possibleCurrentValue);
-    // console.log(possibleCurrentValue, " possibleCurrentValue")
-    // console.log(newValue, "correct value")
-
     this.setCurrentValues({ toCurrentValue: newValue });
   };
 
@@ -165,6 +162,9 @@ class Model extends Observer {
                 * step
                 + min,
           };
+        } else if (currentValue === min) {
+          newData = { fromCurrentValue: min };
+          return newData;
         } else newData = { fromCurrentValue: toCurrentValue - step };
         return newData;
       }
