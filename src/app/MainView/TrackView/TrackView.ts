@@ -121,8 +121,10 @@ class TrackView extends Observer {
               step.toString().split("." || ",").pop()?.length,
             );
             handle.tip.innerHTML = `from ${fromCorrectValue} to ${toCorrectValue}`;
+            handle.tip.style.whiteSpace = "nowrap";
           } else {
             handle.tip.innerHTML = `from ${fromCurrentValue} to ${toCurrentValue}`;
+            handle.tip.style.whiteSpace = "nowrap";
           }
         } else {
           handle.tip.style.opacity = "0";
@@ -137,10 +139,14 @@ class TrackView extends Observer {
               step.toString().split("." || ",").pop()?.length,
             );
             handle.tip.innerHTML = `${fromCorrectValue} ${toCorrectValue}`;
+            handle.tip.style.height = "inherit";
+            handle.tip.style.paddingBottom = "4px";
+            handle.tip.style.marginTop = handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
           } else {
-            handle.tip.innerHTML = `${fromCurrentValue} ${toCurrentValue}`;
+            handle.tip.innerHTML = `${fromCurrentValue}<br>${toCurrentValue}`;
             handle.tip.style.height = "inherit";
             handle.tip.style.marginTop = handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
+            handle.tip.style.paddingBottom = "4px";
           }
         } else {
           handle.tip.style.opacity = "0";
@@ -148,6 +154,7 @@ class TrackView extends Observer {
       } else if (index === 0 && handle.options.isVertical) {
         handle.tip.style.height = "1.5rem";
         handle.tip.style.marginTop = "0px";
+        handle.tip.style.paddingBottom = "0px";
       } else {
         handle.tip.style.opacity = "1";
       }
