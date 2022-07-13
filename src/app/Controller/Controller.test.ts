@@ -12,7 +12,6 @@ const container = document.querySelector(".js-slider");
 const model = new Model();
 const view = new View(container as HTMLElement, model);
 let controller: Controller;
-
 const modelBroadcast = jest.spyOn(Model.prototype, "broadcast");
 const modelSubscribe = jest.spyOn(Model.prototype, "subscribe");
 const modelSetBooleanOptions = jest.spyOn(Model.prototype, "setBooleanOptions");

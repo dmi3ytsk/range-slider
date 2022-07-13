@@ -47,10 +47,8 @@ declare global {
 
     if (typeof options === "string") {
       const methodName = options;
-
       return $(this).map(() => executeControllerMethod(methodName));
     }
-
     return init();
   };
 })($);

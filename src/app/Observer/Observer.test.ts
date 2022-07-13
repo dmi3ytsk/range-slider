@@ -9,7 +9,6 @@ describe("Test Observer", () => {
       expect(observer.listeners).toBeDefined();
     });
   });
-
   describe("Test subscribe method", () => {
     const realBoolean = (data: any) => data.state;
     observer.subscribe("ReturnBoolean", realBoolean);
@@ -24,7 +23,6 @@ describe("Test Observer", () => {
       expect(observer.listeners.ReturnBoolean[1]).toBe(reverseBoolean);
     });
   });
-
   describe("Test broadcast method", () => {
     test("Listeners broadcast method", () => {
       let falseBoolean = false;

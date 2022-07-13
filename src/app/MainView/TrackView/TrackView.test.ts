@@ -30,7 +30,6 @@ describe("Track view", () => {
     test("Call all necessary methods", () => {
       expect(initTrackElements).toBeCalledTimes(1);
     });
-
     test("Set correct data", () => {
       expect(trackView.options).toEqual(testOptions);
     });
@@ -39,7 +38,6 @@ describe("Track view", () => {
   describe("initTrackElements method", () => {
     test("Create correct Runner number", () => {
       expect(trackView.handles).toBeInstanceOf(Array);
-
       expect(trackView.handles).toEqual(
         expect.arrayContaining([expect.any(HandleView)]),
       );

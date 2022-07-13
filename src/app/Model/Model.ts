@@ -25,19 +25,16 @@ class Model extends Observer {
     const {
       fromCurrentValue, toCurrentValue, min, max,
     } = this.data;
-
     this.ratios = {
       fromRatio: (fromCurrentValue - min) / (max - min),
       toRatio: (toCurrentValue - min) / (max - min),
     };
-
     this.broadcast("changeRatios", this.ratios);
   }
 
   public setBooleanOptions(newOptions: UpdateBooleanOptions) {
     const newData: Partial<GlobalOptions> = {};
     const { optionName, optionState } = newOptions;
-
     switch (optionName) {
       case "isRange":
       case "isVertical":

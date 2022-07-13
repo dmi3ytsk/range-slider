@@ -4,16 +4,13 @@
 
 function createElement(tag: string, props: any, ...children: any) {
   const element: any = document.createElement(tag);
-
   Object.keys(props).forEach((key) => (element[key] = props[key]));
-
   children.forEach((child: any) => {
     if (typeof child === "string") {
       child = document.createTextNode(child);
     }
     element.appendChild(child);
   });
-
   return element;
 }
 

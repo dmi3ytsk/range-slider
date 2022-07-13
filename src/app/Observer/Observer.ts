@@ -2,6 +2,7 @@ class Observer {
   constructor(readonly listeners: any = { event: [] }) {
     this.listeners = listeners;
   }
+  // crlf-lf bug;
 
   public subscribe(event: string, callback: {}) {
     this.listeners[event] = this.listeners[event] || [];

@@ -1,4 +1,5 @@
 export interface GlobalOptions {
+
   width: number;
   min: number;
   max: number;

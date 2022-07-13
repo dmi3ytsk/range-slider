@@ -19,7 +19,6 @@ describe("Main view", () => {
     model = new Model();
     view = new View(root, model);
   });
-
   afterEach(() => {
     broadcast.mockClear();
     subscribe.mockClear();
@@ -27,7 +26,6 @@ describe("Main view", () => {
     init.mockClear();
     updateSliderSize.mockClear();
   });
-
   describe("Initialization", () => {
     test("Call all necessary methods", () => {
       expect(init).toBeCalledTimes(1);

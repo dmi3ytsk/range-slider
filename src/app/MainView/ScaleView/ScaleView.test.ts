@@ -15,7 +15,6 @@ const testOptions = {
 };
 
 let scaleView: ScaleView;
-
 const subscribe = jest.spyOn(ScaleView.prototype, "subscribe");
 const broadcast = jest.spyOn(ScaleView.prototype, "broadcast");
 const init = jest.spyOn(ScaleView.prototype, "init");

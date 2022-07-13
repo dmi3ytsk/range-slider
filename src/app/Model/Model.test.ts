@@ -21,7 +21,6 @@ const changeStepDependence = jest.spyOn(
 );
 const setNumberOptions = jest.spyOn(Model.prototype, "setNumberOptions");
 const changeData = jest.spyOn(Model.prototype, "changeData");
-
 let testModel: Model;
 
 describe("Test model", () => {

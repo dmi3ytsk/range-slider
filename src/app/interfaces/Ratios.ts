@@ -1,4 +1,4 @@
 export interface Ratios {
-   fromRatio: number,
-   toRatio: number
- }
+  fromRatio: number,
+  toRatio: number
+}

@@ -16,7 +16,6 @@ const testOptions = {
 
 let handleView: HandleView;
 let node: HTMLElement;
-
 const subscribe = jest.spyOn(HandleView.prototype, "subscribe");
 const broadcast = jest.spyOn(HandleView.prototype, "broadcast");
 const init = jest.spyOn(HandleView.prototype, "init");

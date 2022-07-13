@@ -21,7 +21,6 @@ class HandleView extends Observer {
 
   constructor(public node: HTMLElement, public options: HandleOptions) {
     super();
-
     this.init();
   }
 
@@ -47,7 +46,6 @@ class HandleView extends Observer {
 
   public createHandleElements() {
     const tipOn = this.options.showTip ? "" : "_hide";
-
     this.tip = createElement("div", {
       className: `range-slider__tip${tipOn}`,
     });

@@ -34,7 +34,6 @@ class Controller {
       this.model.subscribe(event, this.view.updateScale);
       this.model.subscribe(event, this.view.reInitSlider);
     });
-
     this.model.subscribe("changeRatios", this.view.updateRatios);
     this.model.subscribe("changeData", this.view.updateOptions);
     this.model.subscribe("changeData", this.view.setPosition);

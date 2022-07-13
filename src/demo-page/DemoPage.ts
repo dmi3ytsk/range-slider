@@ -25,7 +25,6 @@ class DemoPage {
   public init(options: GlobalOptions) {
     // eslint-disable-next-line no-undef
     this.$slider = $(this.root).slider(this.sliderContainer, options);
-
     const isConfigExist = !!this.root.querySelector(".js-ez-range-slider-config");
     if (isConfigExist) {
       const sliderConfig: HTMLFormElement | null = this.root.querySelector(

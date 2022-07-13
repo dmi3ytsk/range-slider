@@ -1,4 +1,4 @@
 export interface ValueOptions {
-   handleNumber: number,
-   ratio: number
- }
+  handleNumber: number,
+  ratio: number
+}

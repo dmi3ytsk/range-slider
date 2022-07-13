@@ -25,12 +25,9 @@ class View extends Observer {
 
   constructor(public container: HTMLElement, readonly model: Model) {
     super();
-
     this.options = model.getData();
     this.ratios = model.getRatios();
-
     this.setTrackOptions();
-
     this.init();
   }
 

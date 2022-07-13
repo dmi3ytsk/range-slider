@@ -14,7 +14,6 @@ class TrackView extends Observer {
 
   constructor(public options: TrackOptions) {
     super();
-
     this.init();
   }
 
@@ -64,7 +63,6 @@ class TrackView extends Observer {
 
     this.handles.forEach((handle, index) => {
       handle.updateSliderSize(this.sliderSize);
-
       if (index === 0) {
         handle.subscribe("dragHandle", this.fromHandleChangeListener);
       } else {

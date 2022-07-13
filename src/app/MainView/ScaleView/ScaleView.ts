@@ -11,9 +11,7 @@ class ScaleView extends Observer {
 
   constructor(public options: GlobalOptions) {
     super();
-
     this.scaleElements = [];
-
     this.createScale();
   }
 

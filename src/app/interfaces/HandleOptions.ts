@@ -1,4 +1,5 @@
 export interface HandleOptions {
+
   isVertical: boolean,
   isRange: boolean,
   showTip: boolean,
