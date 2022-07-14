@@ -42,10 +42,7 @@ class SliderConfig {
           newValue = data.toCurrentValue;
           if (!Number.isInteger(Number(data.step)) && newValue) {
             input.value = newValue.toFixed(
-              data.step
-                .toString()
-                .split("." || ",")
-                .pop()?.length,
+              data.step.toString().split("." || ",").pop()?.length,
             );
           } else {
             input.value = newValue.toString();
@@ -56,10 +53,7 @@ class SliderConfig {
           newValue = data.fromCurrentValue;
           if (!Number.isInteger(Number(data.step)) && newValue) {
             input.value = newValue.toFixed(
-              data.step
-                .toString()
-                .split("." || ",")
-                .pop()?.length,
+              data.step.toString().split("." || ",").pop()?.length,
             );
           } else {
             input.value = newValue.toString();
@@ -129,10 +123,7 @@ class SliderConfig {
         target.value = (Number(min) + step).toString();
       } else if (!Number.isInteger(Number(step))) {
         target.value = Number(target.value).toFixed(
-          step
-            .toString()
-            .split("." || ",")
-            .pop()?.length,
+          step.toString().split("." || ",").pop()?.length,
         );
       }
     }
@@ -146,10 +137,7 @@ class SliderConfig {
         target.value = (Number(max) - step).toString();
       } else if (!Number.isInteger(Number(step))) {
         target.value = Number(target.value).toFixed(
-          step
-            .toString()
-            .split("." || ",")
-            .pop()?.length,
+          step.toString().split("." || ",").pop()?.length,
         );
       }
     }

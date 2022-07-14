@@ -147,10 +147,9 @@ class Model extends Observer {
     const {
       step, fromCurrentValue, toCurrentValue, min, max,
     } = this.data;
-    let currentValue: number;
 
     if (newData.fromCurrentValue) {
-      currentValue = newData.fromCurrentValue;
+      const currentValue = newData.fromCurrentValue;
       if (currentValue + step >= toCurrentValue && currentValue !== min) {
         if (!Number.isInteger((min + toCurrentValue) / step) && toCurrentValue === max) {
           newData = {
@@ -163,8 +162,8 @@ class Model extends Observer {
       } else if (currentValue === min) {
         newData = { fromCurrentValue: currentValue };
       }
-    } else if (newData.toCurrentValue) {
-      currentValue = newData.toCurrentValue;
+    } else if (newData.toCurrentValue !== undefined) {
+      const currentValue = newData.toCurrentValue;
       if (currentValue - step <= fromCurrentValue) {
         const correctValue = (fromCurrentValue + step) > max
           ? max

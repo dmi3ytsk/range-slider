@@ -41,10 +41,7 @@ class Controller {
   }
 
   private subscribeToViewEvents() {
-    this.view.subscribe(
-      "handleFromHandleDrag",
-      this.model.changeFromCurrentValue,
-    );
+    this.view.subscribe("handleFromHandleDrag", this.model.changeFromCurrentValue);
     this.view.subscribe("handleToHandleDrag", this.model.changeToCurrentValue);
   }
 }
