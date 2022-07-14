@@ -63,12 +63,13 @@ class HandleView extends Observer {
   }
 
   public setPosition() {
-    const { isVertical, currentValue, ratio } = this.options;
+    const {
+      isVertical, currentValue, ratio, min, max,
+    } = this.options;
     const sliderLength = isVertical ? -this.sliderSize : this.sliderSize;
     const positionVertical = sliderLength * ratio + this.sliderSize;
     const positionHorizontal = sliderLength * ratio;
     const position = isVertical ? positionVertical : positionHorizontal;
-
     if (isVertical) {
       this.thumb.style.top = `${position - this.thumb.offsetHeight / 2}px`;
       this.tip.style.top = `${
@@ -78,12 +79,17 @@ class HandleView extends Observer {
       this.thumb.style.left = `${position}px`;
       this.tip.style.left = `${position}px`;
     }
-    if (!Number.isInteger(Number(this.options.step)) && currentValue) {
+    if (!Number.isInteger(Number(this.options.step))) {
       this.tip.innerHTML = currentValue.toFixed(
-        this.options.step
-          .toString()
-          .split("." || ",")
-          .pop()?.length,
+        (this.options.step).toString().split("." || ",").pop()?.length,
+      );
+    } else if (!Number.isInteger(Number(min))) {
+      this.tip.innerHTML = currentValue.toFixed(
+        (min).toString().split("." || ",").pop()?.length,
+      );
+    } else if (!Number.isInteger(Number(max))) {
+      this.tip.innerHTML = currentValue.toFixed(
+        (max).toString().split("." || ",").pop()?.length,
       );
     } else {
       this.tip.innerHTML = currentValue.toFixed().toString();

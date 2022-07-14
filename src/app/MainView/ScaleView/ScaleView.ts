@@ -98,10 +98,15 @@ class ScaleView extends Observer {
       }
       if (!Number.isInteger(Number(step))) {
         li.innerHTML = currentValue.toFixed(
-          step
-            .toString()
-            .split("." || ",")
-            .pop()?.length,
+          step.toString().split("." || ",").pop()?.length,
+        );
+      } else if (!Number.isInteger(Number(min))) {
+        li.innerHTML = currentValue.toFixed(
+          min.toString().split("." || ",").pop()?.length,
+        );
+      } else if (!Number.isInteger(Number(max))) {
+        li.innerHTML = currentValue.toFixed(
+          max.toString().split("." || ",").pop()?.length,
         );
       } else {
         li.innerHTML = Math.round(currentValue).toString();
@@ -161,10 +166,15 @@ class ScaleView extends Observer {
       });
       if (!Number.isInteger(Number(step))) {
         li.innerHTML = currentValue.toFixed(
-          step
-            .toString()
-            .split("." || ",")
-            .pop()?.length,
+          step.toString().split("." || ",").pop()?.length,
+        );
+      } else if (!Number.isInteger(Number(min))) {
+        li.innerHTML = currentValue.toFixed(
+          min.toString().split("." || ",").pop()?.length,
+        );
+      } else if (!Number.isInteger(Number(max))) {
+        li.innerHTML = currentValue.toFixed(
+          max.toString().split("." || ",").pop()?.length,
         );
       } else {
         li.innerHTML = Math.round(currentValue).toString();

@@ -6,4 +6,6 @@ export interface HandleOptions {
   currentValue: number,
   ratio: number,
   step: number,
+  min: number,
+  max: number,
 }

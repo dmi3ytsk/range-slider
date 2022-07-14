@@ -72,6 +72,8 @@ class View extends Observer {
       showBar,
       showTip,
       step,
+      min,
+      max,
     } = this.options;
     const { ratios } = this;
 
@@ -84,6 +86,8 @@ class View extends Observer {
       showTip,
       ratios,
       step,
+      min,
+      max,
     });
   };
 
@@ -96,6 +100,8 @@ class View extends Observer {
       isRange,
       showTip,
       step,
+      min,
+      max,
     } = this.options;
     const { ratios } = this;
 
@@ -108,6 +114,8 @@ class View extends Observer {
       showTip,
       ratios,
       step,
+      min,
+      max,
     };
   }
 

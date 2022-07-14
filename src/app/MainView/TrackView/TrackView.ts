@@ -28,6 +28,8 @@ class TrackView extends Observer {
       toCurrentValue,
       ratios: { fromRatio, toRatio },
       step,
+      min,
+      max,
     } = this.options;
     if (isRange) {
       this.handles = [
@@ -38,6 +40,8 @@ class TrackView extends Observer {
           currentValue: fromCurrentValue,
           ratio: fromRatio,
           step,
+          min,
+          max,
         }),
         new HandleView(this.track, {
           isVertical,
@@ -46,6 +50,8 @@ class TrackView extends Observer {
           currentValue: toCurrentValue,
           ratio: toRatio,
           step,
+          min,
+          max,
         }),
       ];
     } else {
@@ -57,6 +63,8 @@ class TrackView extends Observer {
           currentValue: fromCurrentValue,
           ratio: fromRatio,
           step,
+          min,
+          max,
         }),
       ];
     }
@@ -95,6 +103,8 @@ class TrackView extends Observer {
       toCurrentValue,
       ratios: { fromRatio, toRatio },
       step,
+      min,
+      max,
     } = options;
 
     this.setOptionsForHandle(options);
@@ -113,12 +123,12 @@ class TrackView extends Observer {
     this.handles.forEach((handle, index) => {
       if (toOffset - fromOffset < tipSize + 3 && !handle.options.isVertical) {
         if (index === 0) {
-          if (!Number.isInteger(Number(step))) {
+          if (!Number.isInteger(Number(step || min || max))) {
             const fromCorrectValue: string = fromCurrentValue.toFixed(
-              step.toString().split("." || ",").pop()?.length,
+              (step || min || max).toString().split("." || ",").pop()?.length,
             );
             const toCorrectValue: string = toCurrentValue.toFixed(
-              step.toString().split("." || ",").pop()?.length,
+              (step || min || max).toString().split("." || ",").pop()?.length,
             );
             handle.tip.innerHTML = `from ${fromCorrectValue} to ${toCorrectValue}`;
             handle.tip.style.whiteSpace = "nowrap";
@@ -172,6 +182,8 @@ class TrackView extends Observer {
       isRange,
       ratios: { fromRatio, toRatio },
       step,
+      min,
+      max,
     } = options;
     this.handles.forEach((handle, index) => {
       const newOptions = index === 0
@@ -182,6 +194,8 @@ class TrackView extends Observer {
           currentValue: fromCurrentValue,
           ratio: fromRatio,
           step,
+          min,
+          max,
         }
         : {
           isVertical,
@@ -190,6 +204,8 @@ class TrackView extends Observer {
           currentValue: toCurrentValue,
           ratio: toRatio,
           step,
+          min,
+          max,
         };
       handle.updateSliderSize(this.sliderSize);
       handle.updateOptions(newOptions);

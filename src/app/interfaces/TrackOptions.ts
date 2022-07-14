@@ -7,4 +7,6 @@ export interface TrackOptions {
   toCurrentValue: number,
   ratios: { fromRatio: number, toRatio: number },
   step: number,
+  min: number,
+  max: number,
 }
