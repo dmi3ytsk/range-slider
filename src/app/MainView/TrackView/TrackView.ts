@@ -99,78 +99,95 @@ class TrackView extends Observer {
 
   public setElementsPosition(options: TrackOptions) {
     const {
-      fromCurrentValue,
-      toCurrentValue,
       ratios: { fromRatio, toRatio },
-      step,
-      min,
-      max,
     } = options;
 
     this.setOptionsForHandle(options);
+    this.setHandleDesign(options);
+    this.setBarDesign(options, fromRatio, toRatio);
+  }
+
+  private setHandleDesign(options: TrackOptions) {
+    const {
+      isVertical,
+    } = options;
     let fromOffset: number;
     let toOffset: number;
     let tipSize: number;
+
     this.handles.forEach((handle, index) => {
       if (index === 0) {
-        fromOffset = handle.options.isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
+        fromOffset = isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
       } else {
-        toOffset = handle.options.isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
-        tipSize = handle.options.isVertical ? handle.tip.offsetHeight : handle.tip.offsetWidth;
+        toOffset = isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
+        tipSize = isVertical ? handle.tip.offsetHeight : handle.tip.offsetWidth;
       }
     });
 
     this.handles.forEach((handle, index) => {
-      if (toOffset - fromOffset < tipSize + 3 && !handle.options.isVertical) {
+      if (toOffset - fromOffset < tipSize + 3 && !isVertical) {
         if (index === 0) {
-          if (!Number.isInteger(Number(step || min || max))) {
-            const fromCorrectValue: string = fromCurrentValue.toFixed(
-              (step || min || max).toString().split("." || ",").pop()?.length,
-            );
-            const toCorrectValue: string = toCurrentValue.toFixed(
-              (step || min || max).toString().split("." || ",").pop()?.length,
-            );
-            handle.tip.innerHTML = `from ${fromCorrectValue} to ${toCorrectValue}`;
-            handle.tip.style.whiteSpace = "nowrap";
-          } else {
-            handle.tip.innerHTML = `from ${fromCurrentValue} to ${toCurrentValue}`;
-            handle.tip.style.whiteSpace = "nowrap";
-          }
+          this.fromTipDesign(options, handle);
         } else {
+          // hide toHandleTip when fromHandleTip is close
           handle.tip.style.opacity = "0";
         }
-      } else if (fromOffset - toOffset < tipSize && handle.options.isVertical) {
+      } else if (fromOffset - toOffset < tipSize && isVertical) {
         if (index === 0) {
-          if (!Number.isInteger(Number(step))) {
-            const fromCorrectValue: string = fromCurrentValue.toFixed(
-              step.toString().split("." || ",").pop()?.length,
-            );
-            const toCorrectValue: string = toCurrentValue.toFixed(
-              step.toString().split("." || ",").pop()?.length,
-            );
-            handle.tip.innerHTML = `${fromCorrectValue} ${toCorrectValue}`;
-            handle.tip.style.height = "inherit";
-            handle.tip.style.paddingBottom = "4px";
-            handle.tip.style.marginTop = handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
-          } else {
-            handle.tip.innerHTML = `${fromCurrentValue}<br>${toCurrentValue}`;
-            handle.tip.style.height = "inherit";
-            handle.tip.style.marginTop = handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
-            handle.tip.style.paddingBottom = "4px";
-          }
+          this.fromTipDesign(options, handle, tipSize);
         } else {
+          // hide toHandleTip when fromHandleTip is close
           handle.tip.style.opacity = "0";
         }
-      } else if (index === 0 && handle.options.isVertical) {
+      } else if (index === 0 && isVertical) {
+        // reset to default fromHandleTip style
         handle.tip.style.height = "1.5rem";
         handle.tip.style.marginTop = "0px";
         handle.tip.style.paddingBottom = "0px";
       } else {
+        // reset opacity toHandleTip
         handle.tip.style.opacity = "1";
       }
     });
+  }
 
-    this.setBarDesign(options, fromRatio, toRatio);
+  // eslint-disable-next-line class-methods-use-this
+  private fromTipDesign(options: TrackOptions, handle: HandleView, tipSize?: number) {
+    const {
+      step, fromCurrentValue, toCurrentValue, min, max, isVertical,
+    } = options;
+    const propList: [number, number, number] = [step, min, max];
+    const fractionalProp = propList.find((prop) => !Number.isInteger(Number(prop)));
+    if (fractionalProp !== undefined) {
+      const fromCorrectValue: string = fromCurrentValue.toFixed(
+        (fractionalProp).toString().split("." || ",").pop()?.length,
+      );
+      const toCorrectValue: string = toCurrentValue.toFixed(
+        (fractionalProp).toString().split("." || ",").pop()?.length,
+      );
+      this.singleTipStyle(handle, fromCorrectValue, toCorrectValue, tipSize, isVertical);
+    } else {
+      this.singleTipStyle(handle, fromCurrentValue, toCurrentValue, tipSize, isVertical);
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private singleTipStyle(
+    handle: HandleView,
+    fromCurrentValue: number | string,
+    toCurrentValue: number | string,
+    tipSize?: number,
+    isVertical?: boolean,
+  ) {
+    if (isVertical && tipSize !== undefined) {
+      handle.tip.innerHTML = `${fromCurrentValue}<br>${toCurrentValue}`;
+      handle.tip.style.height = "inherit";
+      handle.tip.style.marginTop = handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
+      handle.tip.style.paddingBottom = "4px";
+    } else {
+      handle.tip.innerHTML = `from ${fromCurrentValue} to ${toCurrentValue}`;
+      handle.tip.style.whiteSpace = "nowrap";
+    }
   }
 
   private setOptionsForHandle(options: TrackOptions) {
