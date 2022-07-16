@@ -37,23 +37,28 @@ class SliderConfig {
       (input: HTMLInputElement) => {
         const { name } = input;
         let newValue = data[name];
+        const propList: [number, number, number] = [data.step, data.min, data.max];
+        const fractionalProp = propList.find((prop) => !Number.isInteger(Number(prop)));
 
         if (name === "toCurrentValue") {
           newValue = data.toCurrentValue;
-          if (!Number.isInteger(Number(data.step)) && newValue) {
+          if (
+            !Number.isInteger(Number(fractionalProp)) && newValue && fractionalProp !== undefined
+          ) {
             input.value = newValue.toFixed(
-              data.step.toString().split("." || ",").pop()?.length,
+              fractionalProp.toString().split("." || ",").pop()?.length,
             );
           } else {
             input.value = newValue.toString();
           }
         }
-
         if (name === "fromCurrentValue") {
           newValue = data.fromCurrentValue;
-          if (!Number.isInteger(Number(data.step)) && newValue) {
+          if (
+            !Number.isInteger(Number(fractionalProp)) && newValue && fractionalProp !== undefined
+          ) {
             input.value = newValue.toFixed(
-              data.step.toString().split("." || ",").pop()?.length,
+              fractionalProp.toString().split("." || ",").pop()?.length,
             );
           } else {
             input.value = newValue.toString();
