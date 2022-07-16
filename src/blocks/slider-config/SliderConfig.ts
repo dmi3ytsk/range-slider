@@ -64,6 +64,18 @@ class SliderConfig {
             input.value = newValue.toString();
           }
         }
+        if (name === "step") {
+          input.value = Math.sign(Number(input.value)) > 0
+            ? input.value
+            : Math.abs(Number(input.value)).toString();
+          if (Number(input.value) > Number(data.max) - Number(data.min)) {
+            input.value = (Number(data.max) - Number(data.min)).toString();
+          } else if (!Number.isInteger(Number(input.value))) {
+            input.value = Number(input.value).toString();
+          } else if (Number(input.value) === 0) {
+            input.value = Number(1).toString();
+          }
+        }
       },
     );
   };
