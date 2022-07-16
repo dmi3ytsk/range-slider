@@ -144,37 +144,54 @@ class Model extends Observer {
   }
 
   private returnSelectedValue(newData: Partial<GlobalOptions>) {
-    const {
-      step, fromCurrentValue, toCurrentValue, min, max,
-    } = this.data;
-
-    if (newData.fromCurrentValue) {
+    if (newData.fromCurrentValue !== undefined) {
       const currentValue = newData.fromCurrentValue;
-      if (currentValue + step >= toCurrentValue && currentValue !== min) {
-        if (!Number.isInteger((min + toCurrentValue) / step) && toCurrentValue === max) {
-          newData = {
-            fromCurrentValue:
-              Math.floor((Math.abs(min) + Math.abs(toCurrentValue)) / step)
-                * step
-                + min,
-          };
-        } else newData = { fromCurrentValue: toCurrentValue - step };
-      } else if (currentValue === min) {
-        newData = { fromCurrentValue: currentValue };
-      }
+      newData = this.calcFromValue(newData, currentValue);
     } else if (newData.toCurrentValue !== undefined) {
       const currentValue = newData.toCurrentValue;
-      if (currentValue - step <= fromCurrentValue) {
-        const correctValue = (fromCurrentValue + step) > max
-          ? max
-          : fromCurrentValue + step;
-        newData = { toCurrentValue: correctValue };
-      } else if (currentValue === max) {
-        newData = { toCurrentValue: currentValue };
-      }
-      return newData;
+      newData = this.calcToValue(newData, currentValue);
     }
+    return newData;
+  }
 
+  // eslint-disable-next-line class-methods-use-this
+  private calcToValue(newData: Partial<GlobalOptions>, currentValue: number) {
+    const {
+      step, fromCurrentValue, max,
+    } = this.data;
+
+    if (currentValue - step <= fromCurrentValue) {
+      const correctValue = (fromCurrentValue + step) > max
+        ? max
+        : fromCurrentValue + step;
+      newData = { toCurrentValue: correctValue };
+    } else if (currentValue === max) {
+      newData = { toCurrentValue: currentValue };
+    }
+    return newData;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  private calcFromValue(newData: Partial<GlobalOptions>, currentValue: number) {
+    const {
+      step, toCurrentValue, min, max,
+    } = this.data;
+
+    if (currentValue + step >= toCurrentValue && currentValue !== min) {
+      if (!Number.isInteger((min + toCurrentValue) / step) && toCurrentValue === max) {
+        const isResultMoreMax = Math
+          .floor((Math.abs(min) + Math.abs(max)) / step) * step + min >= max;
+        const correctValue = isResultMoreMax
+          ? Math.floor((Math.abs(min) + Math.abs(max)) / step) * step + min - step
+          : Math.floor((Math.abs(min) + Math.abs(max)) / step) * step + min;
+
+        newData = { fromCurrentValue: correctValue };
+      } else {
+        newData = { fromCurrentValue: toCurrentValue - step };
+      }
+    } else if (currentValue === min) {
+      newData = { fromCurrentValue: currentValue };
+    }
     return newData;
   }
 
