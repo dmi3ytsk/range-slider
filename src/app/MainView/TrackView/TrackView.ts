@@ -111,18 +111,9 @@ class TrackView extends Observer {
     const {
       isVertical,
     } = options;
-    let fromOffset: number;
-    let toOffset: number;
-    let tipSize: number;
-
-    this.handles.forEach((handle, index) => {
-      if (index === 0) {
-        fromOffset = isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
-      } else {
-        toOffset = isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
-        tipSize = isVertical ? handle.tip.offsetHeight : handle.tip.offsetWidth;
-      }
-    });
+    const {
+      fromOffset, toOffset, tipSize,
+    } = this.handleDimensions(isVertical);
 
     this.handles.forEach((handle, index) => {
       if (toOffset - fromOffset < tipSize + 3 && !isVertical) {
@@ -149,6 +140,23 @@ class TrackView extends Observer {
         handle.tip.style.opacity = "1";
       }
     });
+  }
+
+  private handleDimensions(isVertical: boolean) {
+    const dimensions = {
+      fromOffset: 0,
+      toOffset: 0,
+      tipSize: 0,
+    };
+    this.handles.forEach((handle, index) => {
+      if (index === 0) {
+        dimensions.fromOffset = isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
+      } else {
+        dimensions.toOffset = isVertical ? handle.tip.offsetTop : handle.tip.offsetLeft;
+        dimensions.tipSize = isVertical ? handle.tip.offsetHeight : handle.tip.offsetWidth;
+      }
+    });
+    return dimensions;
   }
 
   // eslint-disable-next-line class-methods-use-this
