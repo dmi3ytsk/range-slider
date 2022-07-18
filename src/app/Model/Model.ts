@@ -127,10 +127,9 @@ class Model extends Observer {
     this.changeData(newData);
   };
 
-  private returnCorrectValue(newValue: number): number {
+  public returnCorrectValue(newValue: number): number {
     const { min, step, max } = this.data;
     const lastValue = Math.floor((max - min) / step) * step + min;
-
     newValue = newValue <= lastValue + (max - lastValue) / 2
       ? Math.round((newValue - min) / step) * step + min
       : max;
@@ -139,7 +138,6 @@ class Model extends Observer {
     } else if (newValue <= min) {
       newValue = min;
     }
-
     return newValue;
   }
 
@@ -172,19 +170,17 @@ class Model extends Observer {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private calcFromValue(newData: Partial<GlobalOptions>, currentValue: number) {
+  public calcFromValue(newData: Partial<GlobalOptions>, currentValue: number) {
     const {
       step, toCurrentValue, min, max,
     } = this.data;
-
     if (currentValue + step >= toCurrentValue && currentValue !== min) {
       if (!Number.isInteger((min + toCurrentValue) / step) && toCurrentValue === max) {
         const isResultMoreMax = Math
           .floor((Math.abs(min) + Math.abs(max)) / step) * step + min >= max;
         const correctValue = isResultMoreMax
-          ? Math.floor((Math.abs(min) + Math.abs(max)) / step) * step + min - step
+          ? max - step
           : Math.floor((Math.abs(min) + Math.abs(max)) / step) * step + min;
-
         newData = { fromCurrentValue: correctValue };
       } else {
         newData = { fromCurrentValue: toCurrentValue - step };
@@ -208,7 +204,6 @@ class Model extends Observer {
     const {
       toCurrentValue, fromCurrentValue, step, min,
     } = this.data;
-
     if (fromCurrentValue >= toCurrentValue) {
       let value = toCurrentValue - step;
       if (value < min) {
@@ -252,7 +247,6 @@ class Model extends Observer {
       const newValue = {
         fromCurrentValue: max - step,
       };
-
       this.changeData(newValue);
     }
 
