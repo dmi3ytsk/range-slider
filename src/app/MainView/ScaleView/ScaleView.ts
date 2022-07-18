@@ -118,10 +118,10 @@ class ScaleView extends Observer {
       this.setElementIndentation(position, li);
     }
     const preLastValue = Number(
-      this.scaleElements[this.scaleElements.length - 2].innerHTML,
+      this.scaleElements[this.scaleElements.length - 2]?.innerHTML,
     );
     const lastValue = Number(
-      this.scaleElements[this.scaleElements.length - 1].innerHTML,
+      this.scaleElements[this.scaleElements.length - 1]?.innerHTML,
     );
     if (preLastValue + scaleStep / 2 > lastValue) {
       this.scaleElements[this.scaleElements.length - 2].innerHTML = "";

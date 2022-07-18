@@ -162,7 +162,7 @@ class TrackView extends Observer {
   // eslint-disable-next-line class-methods-use-this
   private fromTipDesign(options: TrackOptions, handle: HandleView, tipSize?: number) {
     const {
-      step, fromCurrentValue, toCurrentValue, min, max, isVertical,
+      step, fromCurrentValue, toCurrentValue, min, max, isVertical, isRange,
     } = options;
     const propList: [number, number, number] = [step, min, max];
     const fractionalProp = propList.find((prop) => !Number.isInteger(Number(prop)));
@@ -173,9 +173,9 @@ class TrackView extends Observer {
       const toCorrectValue: string = toCurrentValue.toFixed(
         (fractionalProp).toString().split("." || ",").pop()?.length,
       );
-      this.singleTipStyle(handle, fromCorrectValue, toCorrectValue, tipSize, isVertical);
+      this.singleTipStyle(handle, fromCorrectValue, toCorrectValue, tipSize, isVertical, isRange);
     } else {
-      this.singleTipStyle(handle, fromCurrentValue, toCurrentValue, tipSize, isVertical);
+      this.singleTipStyle(handle, fromCurrentValue, toCurrentValue, tipSize, isVertical, isRange);
     }
   }
 
@@ -186,13 +186,14 @@ class TrackView extends Observer {
     toCurrentValue: number | string,
     tipSize?: number,
     isVertical?: boolean,
+    isRange?: boolean,
   ) {
     if (isVertical && tipSize !== undefined) {
       handle.tip.innerHTML = `${fromCurrentValue}<br>${toCurrentValue}`;
       handle.tip.style.height = "inherit";
       handle.tip.style.marginTop = handle.tip.offsetHeight > tipSize ? "-5px" : "0px";
       handle.tip.style.paddingBottom = "4px";
-    } else {
+    } else if (isRange) {
       handle.tip.innerHTML = `from ${fromCurrentValue} to ${toCurrentValue}`;
       handle.tip.style.whiteSpace = "nowrap";
     }
