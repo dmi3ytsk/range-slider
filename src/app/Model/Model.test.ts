@@ -133,6 +133,45 @@ describe("Test model", () => {
     });
   });
 
+  describe("returnCorrectValue method", () => {
+    test("Calculate integer value", () => {
+      const newValue = 50.3223444499;
+      const integer = 50;
+
+      expect(integer).toEqual(testModel.returnCorrectValue(newValue));
+    });
+    test("Return valid value", () => {
+      const { max, min } = testModel.data;
+      const valueBiggerThanMax = max + 100;
+      const valueLessThanMin = min - 100;
+
+      expect(max).toEqual(testModel.returnCorrectValue(valueBiggerThanMax));
+      expect(min).toEqual(testModel.returnCorrectValue(valueLessThanMin));
+    });
+  });
+
+  describe("calcFromValue method", () => {
+    test("Calculate fromValue on max border with non-integer values", () => {
+      const customModel = new Model({
+        width: 500,
+        fromCurrentValue: 49,
+        min: 10.1,
+        max: 50,
+        step: 1.5,
+        showTip: true,
+        isRange: true,
+        toCurrentValue: 50,
+        showBar: true,
+        showScale: false,
+        isVertical: false,
+      });
+      const { max, step, fromCurrentValue } = customModel.getData();
+      const newData = { fromCurrentValue };
+
+      expect({ fromCurrentValue: max - step })
+        .toEqual(customModel.calcFromValue(newData, fromCurrentValue));
+    });
+  });
   describe("setCurrentValues method", () => {
     test("Call change data with correct value", () => {
       testModel.setCurrentValues({ fromCurrentValue: 100 });
