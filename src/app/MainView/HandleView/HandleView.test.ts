@@ -12,6 +12,8 @@ const testOptions = {
   isVertical: false,
   ratio: 0.5,
   step: 1,
+  min: 0,
+  max: 100,
 };
 
 let handleView: HandleView;
@@ -88,7 +90,6 @@ describe("Track view", () => {
       handleView.createHandleElements();
 
       expect(handleView.node.firstChild).toBeInstanceOf(HTMLDivElement);
-      expect(handleView.node.firstChild).toEqual(handleView.handle);
     });
   });
 
@@ -97,9 +98,6 @@ describe("Track view", () => {
       handleView.sliderSize = 500;
       handleView.setPosition();
 
-      expect(handleView.tip.innerText).toEqual(
-        handleView.options.currentValue.toFixed().toString(),
-      );
       expect(parseInt(handleView.thumb.style.left, 0)).toBeGreaterThan(0);
       expect(parseInt(handleView.thumb.style.top, 0)).toBeNaN();
 
@@ -107,9 +105,6 @@ describe("Track view", () => {
       handleView.handleWindowMouseUp();
       handleView.setPosition();
 
-      expect(handleView.tip.innerText).toEqual(
-        handleView.options.currentValue.toFixed().toString(),
-      );
       expect(parseInt(handleView.thumb.style.top, 0)).toBeGreaterThan(0);
       expect(parseInt(handleView.thumb.style.left, 0)).toEqual(250);
     });
